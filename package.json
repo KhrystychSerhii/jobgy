@@ -27,6 +27,7 @@
     "apisauce": "^0.14.2",
     "format-json": "^1.0.3",
     "identity-obj-proxy": "^3.0.0",
+    "immer": "^0.8.2",
     "lodash": "^4.17.4",
     "prop-types": "15.6.0",
     "querystringify": "1.0.0",
@@ -36,11 +37,14 @@
     "react-native-config": "^0.10.0",
     "react-native-device-info": "0.11.0",
     "react-native-i18n": "1.0.0",
+    "react-native-linear-gradient": "^2.4.0",
+    "react-native-size-matters": "^0.1.0",
     "react-navigation": "1.0.0-beta.11",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "reduxsauce": "0.7.0",
+    "reselect": "^3.0.1",
     "seamless-immutable": "^7.1.2"
   },
   "devDependencies": {
@@ -102,6 +106,11 @@
       "XMLHttpRequest",
       "FormData",
       "React$Element"
+    ]
+  },
+  "rnpm": {
+    "assets": [
+      "./fonts/"
     ]
   }
 }

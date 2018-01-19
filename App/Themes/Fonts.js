@@ -1,13 +1,16 @@
+import {scale} from 'react-native-size-matters';
+
 const type = {
-  base: 'Avenir-Book',
-  bold: 'Avenir-Black',
+  base: 'Rubik-Light',
+  medium: 'Rubik-Medium',
+  bold: 'Rubik-Bold',
   emphasis: 'HelveticaNeue-Italic'
 }
 
 const size = {
-  h1: 38,
-  h2: 34,
-  h3: 30,
+  h1: scale(40),
+  h2: scale(20),
+  h3: 28,
   h4: 26,
   h5: 20,
   h6: 19,
@@ -24,7 +27,7 @@ const style = {
     fontSize: size.h1
   },
   h2: {
-    fontWeight: 'bold',
+    fontFamily: type.base,
     fontSize: size.h2
   },
   h3: {
