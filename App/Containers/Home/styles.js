@@ -8,6 +8,15 @@ export default StyleSheet.create({
   container: {
     ...ApplicationStyles.screen.container,
     position: 'relative',
+    // justifyContent: 'center'
+  },
+  contentWrapper: {
+    width: '80%',
+  },
+  btnRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 35,
   },
   titleWrapper: {
     paddingTop: 50,
@@ -19,27 +28,53 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   subtitle: {
-    ...Fonts.style.h2,
+    ...Fonts.style.h3,
     color: Colors.white,
     textAlign: 'center',
   },
-  homeBtn: {
+  homeBtnBackground: {
     backgroundColor: Colors.white,
-    width: scale(120),
-    height: scale(120),
+    width: scale(110),
+    height: scale(110),
     // boxShadow: '2 -7 10 rgba(0, 0, 0)',
-    borderRadius: 14,
+    borderRadius: 8,
     shadowColor: 'rgba(0, 0, 0, 0.16)',
     shadowOffset: {width: 0, height: 10},
     shadowOpacity: 0.16,
     shadowRadius: 5,
   },
   homeBtnImage: {
-    width: undefined,
-    height: undefined,
+    width: scale(110),
+    height: scale(110),
     flex: 1,
     resizeMode: 'contain',
+    position: 'absolute',
+    top: 0,
+    zIndex: 2,
+  },
+  homeBtnInner: {
+    width: scale(110),
+    height: scale(140),
+    paddingTop: 20,
     position: 'relative',
-    top: -30
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // paddingBottom:10
+  },
+  bottomBtnWrapper: {
+    // position: 'absolute',
+    // bottom: 0,
+    // right: 0,
+    // left: 0,
+    height: 40,
+    // flex: 1,
+    alignItems: 'center'
+  },
+  bottomBtn: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    padding: 10
   }
 })

@@ -1,1 +1,137 @@
-{}
+{
+  "MENU":{
+    "CLIENT_SERVICE": "לשירות לקוחות *6778",
+    "HELLO_GUEST": "שלום אורח",
+    "GUEST_TEXT": "באפשרותך ליצור חדשות וליהנות מהשירות של ג’בג’י. הרשת למציאת עבודות ועובדים בענף הבניה",
+    "REGISTER": "צור חשבון חדש",
+    "LANGUAGE": "שפה",
+    "LOGIN": "יש לך חשבון? התחבר כאן"
+  },
+  "HOME": {
+    "TITLE": "ג’ובג’י לשירותך",
+    "SUBTITLE": "בחר בין האפשרויות הנל ומצא\n את זה שאתה רוצה לעשות",
+    "FIND_JOB": "מצא עבודה",
+    "POST_JOB": "פרסם עבודה",
+    "ALL_BUSINESSES" : "כל העסקים",
+    "WATCH_INFO": "צפה בסרטון הסברה"
+  },
+  "REGISTER": {
+    "TITLE": "צור חשבון",
+    "FULL_NAME": "שם מלא:",
+    "BUSINESS_NAME": "שם העסק:",
+    "BUSINESS_NUMBER": "ח.פ\ע.מ:",
+    "ADDRESS": "כתובת:",
+    "PHONE": "טלפון:",
+    "EMAIL": "אימייל:",
+    "INTERESTED_IN": "אני מתעניין ב:",
+    "SUBMIT": "המשך לרכישה",
+    "TERMS": "בעת ההרשמה הינך מאשר את ",
+    "TERMS_LINK": "תנאי השימוש",
+  },
+  "LOGIN": {
+    "TITLE": "התחברות",
+    "PHONE": "טלפון:",
+    "PASSWORD": "סיסמה:",
+    "SUBMIT": "התחברות"
+  },
+  "FIND_JOB": {
+    "TITLE": "פרסם מודעה"
+  },
+  "SEARCH_RESULTS": {
+    "TITLE": "מודעות בקטגוריית בלוק",
+    "COUNT": "נמצאו {{count}} מודעות",
+    "FILTER_BUTTON": "סינון מודעות",
+    "CATEGORY": "תחום",
+    "AREA": "אזור",
+    "SERVICE_TYPE": "סוג השירות",
+    "DATE": "זמן ביצוע"
+  },
+  "FILTER_MODAL": {
+    "RESET": "נקה הכל",
+    "BACK_BTN_TEXT": "סינון מודעות",
+    "SELECT_TYPE": "בחר סוג הבלוק:",
+    "SELECT_BLOCK_SIZE": "בחר מידת הבלוק:",
+    "TYPES": ["סוג א", "סוג ב", "סוג ג", "סוג ד", "סוג ה", "סוג ו"],
+    "CONFIRM": "אישור",
+    "CHECK_ALL": "סמן הכל",
+    "CLEAR_ALL": "נקה הכל",
+  },
+  "JOB_DETAILS": {
+    "FIELD_BLOCK": "תחום: בלוק",
+    "TYPE": "סוג",
+    "COUNT": "כמות",
+    "PROJECT_FEATURE": "זמן ביצוע",
+    "DUE_TIME": "זמן ביצוע",
+    "DESCRIPTION": "תיאור",
+    "IMAGE": "תמונה",
+    "CALL_NOW": "חייג עכשיו",
+    "SHARE": "שתף מודעה"
+  },
+  "JOBS_LIST": {
+    "CATEGORY_1": "עבודות \n עפר",
+    "CATEGORY_2": "משאבות",
+    "CATEGORY_3": "בניין",
+    "CATEGORY_4": "איטום",
+    "CATEGORY_5": "עבודות \n פיתוח",
+    "CATEGORY_6": "גידור \n אתרים",
+    "CATEGORY_7": "מנופים",
+    "CATEGORY_8": "יועצים",
+    "CATEGORY_9": "תשתיות",
+    "CATEGORY_10": "פרויקט \n מפתח",
+    "CATEGORY_11": "מוביל צמ”ה",
+    "CATEGORY_12": "קידוח וניסור \n בטון",
+    "CATEGORY_13": "דרושים",
+    "CATEGORY_14": "קידוחים",
+    "CATEGORY_15": "הובלה \n והפצה"
+  },
+  "POST_JOB": {
+    "TITLE": "פרסם מודעה",
+    "SUCCESS_TITLE": "!המודעה עלתה בהצלחה",
+    "SUCCESS_DETAILS": "מודעה מספר {{id}}, {{subcategory}}, בלוק עלתה לאוויר. ישאר זמין לקבלת עבודות",
+    "SHOW_AD": "צפה במודעה",
+    "GO_BACK": "חזור לראשי"
+  },
+  "JOB_FORM": {
+    "TYPE": "בחר סוג הבלוק:",
+    "REGISTERED_IN": "רשום כאן:",
+    "SELECT_PICTURE": "בחר כאן  - צרף תמונה:",
+    "START_WORK": "תחילת עבודה:",
+    "END_WORK": "סיום עבודה:",
+    "MATERIAL_COUNT": "כמות החומר:",
+    "MATERIAL_SIZE": "מידת החומר:",
+    "BLOCK_SIZE": "בחר מידת הבלוק:",
+    "POST": "!פרסם מודעה",
+    "MATERIAL_COUNT_OPTIONS" : [
+      "לפי משקל",
+      "לפי אריזה",
+      "לפי מטר",
+      "לפי מטר רץ",
+      "לפי מטר רץ",
+      "לפי מטר רץ"
+    ],
+    "ADDRESS_FROM": "Address from"
+  },
+  "SUBSCRIPTIONS": {
+    "TITLE": "רכישת מנוי",
+    "ANNUAL_UNLIMITED": "מנוי שנתי “פרימיום” לצפיה ופרסום חופשי בכל הקטגוריות",
+    "ANNUAL_PREPAID_ALL": "מנוי שנתי לצפיה בכל הקטגוריות ופרסום מודעה בתשלום",
+    "MONTHLY_PREPAID_ALL": "מנוי חודשי לצפיה בכל הקטגוריות ופרסום מודעה בתשלום",
+    "ANNUAL_PREPAID_ONE": "מנוי שנתי לצפיה בקטגוריה אחת ופרסום מודעה בתשלום",
+    "MONTHLY_PREPAID_ONE": "מנוי חודשי לצפיה בקטגוריה אחת ופרסום מודעה בתשלום",
+    "FREE_AD_POST": "פרסום מודעות חינם",
+    "PER_YEAR": "לחודש",
+    "PER_POST": "למודעה",
+    "PER_MONTH": "לחודש",
+    "BEST_CHOICE": "מומלץ",
+    "MODAL_TITLE": "בחירת קטגוריות",
+    "MODAL_SUBTITLE": "לחץ על הקטגוריות שברצונך לבחור ולחיצה שניה להסרה באפשרותך לדפדף ימינה ושמאלה באזור הקטגוריות",
+    "SELECTED_CATEGORIES_COUNT": "נבחרו {{count}} קטגוריות",
+    "CONTINUE": "המשך לרכישה",
+    "PAYMENT_SUMMARY": "סיכום לתשלום",
+    "CARD_HOLDER": "שם בעל הכרטיס:",
+    "CARD_NUMBER": "מספר כרטיס:",
+    "CARD_VALIDITY": "תוקף:",
+    "CARD_SECURITY_CODE": "שלוש ספרות בגב הכרטיס:",
+    "MAKE_PAYMENT": "בצע תשלום"
+  }
+}

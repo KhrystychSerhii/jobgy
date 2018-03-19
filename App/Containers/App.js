@@ -4,9 +4,11 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
+import {I18nManager} from 'react-native'
 
 // create our store
 const store = createStore()
+I18nManager.forceRTL(true);
 
 /**
  * Provides an entry point into our application.  Both index.ios.js and index.android.js
