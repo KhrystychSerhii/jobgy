@@ -1,5 +1,6 @@
 import indexOf from 'lodash/indexOf'
 import without from 'lodash/without'
+import { I18nManager } from 'react-native'
 
 export const createGroupedArray = (arr, chunkSize) => {
   const groups = []
@@ -29,3 +30,7 @@ export function getFormattedDate (date) {
 
   return month + '/' + day + '/' + year
 }
+
+export const isRtl = () => I18nManager.isRTL
+export const rightProp = () => isRtl() ? 'right' : 'left';
+export const leftProp = () => isRtl() ? 'left' : 'right'

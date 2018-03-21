@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TouchableWithoutFeedback, Text, View } from 'react-native'
+import { TouchableOpacity, Text, View } from 'react-native'
 import WhiteBlock from '../WhiteBlock'
 
 import styles from './styles'
+import Row from '../Row/Row'
 
 class FormBaseItem extends React.Component {
   render () {
@@ -11,12 +12,12 @@ class FormBaseItem extends React.Component {
     return (
       <View style={{height: 80}}>
         <WhiteBlock style={whiteBlockStyles}>
-          <TouchableWithoutFeedback style={{flex: 1}} onPress={onFocus}>
-            <View style={styles.touchable}>
-              <Text style={styles.label} {...labelProps}>{label}</Text>
+          <TouchableOpacity style={{flex: 1}} onPress={onFocus}>
+            <Row justifyContent={'space-between'} styles={[styles.touchable, {flex: 1}]}>
               {children}
-            </View>
-          </TouchableWithoutFeedback>
+              <Text style={styles.label} {...labelProps}>{label}</Text>
+            </Row>
+          </TouchableOpacity>
         </WhiteBlock>
       </View>
     )

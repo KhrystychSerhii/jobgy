@@ -26,7 +26,7 @@ Row.propTypes = {
   justifyContent: PropTypes.string,
   alignContent: PropTypes.string,
   children: PropTypes.node,
-  styles: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+  styles: PropTypes.any,
 }
 
 export default Row

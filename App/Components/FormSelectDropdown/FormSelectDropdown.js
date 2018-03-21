@@ -7,7 +7,7 @@ import isArray from 'lodash/isArray'
 import FormBaseItem from '../FormBaseItem'
 import Row from '../Row'
 import Dropdown from '../Dropdown/Dropdown'
-
+import styles from './styles'
 class FormSelectDropdown extends React.Component {
   state = {
     isOpen: false,
@@ -66,8 +66,8 @@ class FormSelectDropdown extends React.Component {
         <FormBaseItem
           whiteBlockStyles={_whiteBlockStyles} label={label} labelProps={labelProps} onFocus={this.handleFocus}
         >
-          <Row>
-            {!!selectedText && <Text>{selectedText}</Text>}
+          <Row styles={{flex: 1}}>
+            {!!selectedText && <Text style={styles.value}>{selectedText}</Text>}
             {isValid && <Icon size={30} color={'#4bb748'} name='md-checkmark' />}
           </Row>
         </FormBaseItem>

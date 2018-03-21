@@ -92,7 +92,7 @@ class SearchResultsScreen extends Component {
       <ScreenContainer noPadding>
         <View style={styles.titleWithImagesWrapper}>
           <Image source={images.buildingImg} style={styles.resultsTitleImageLeft} resizeMode='contain' />
-          <PageTitle title={I18n.t('SEARCH_RESULTS.TITLE')} />
+          <PageTitle textStyle={{fontSize: 20}} title={I18n.t('SEARCH_RESULTS.TITLE')} />
           <Image source={images.findDude} style={styles.resultsTitleImage} resizeMode='contain' />
         </View>
         <View>

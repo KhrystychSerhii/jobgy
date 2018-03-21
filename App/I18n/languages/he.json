@@ -109,7 +109,8 @@
       "לפי מטר רץ",
       "לפי מטר רץ"
     ],
-    "ADDRESS_FROM": "Address from"
+    "ADDRESS_FROM": "Address from",
+    "ADDRESS_TO": "Address to"
   },
   "SUBSCRIPTIONS": {
     "TITLE": "רכישת מנוי",

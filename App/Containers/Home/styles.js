@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, I18nManager } from 'react-native'
 import { ApplicationStyles, Colors } from '../../Themes/index'
 import Fonts from '../../Themes/Fonts'
 import { scale } from 'react-native-size-matters'
@@ -14,12 +14,16 @@ export default StyleSheet.create({
     width: '80%',
   },
   btnRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     marginBottom: 35,
   },
   titleWrapper: {
     paddingTop: 50,
+  },
+  findBtn: {
+    [I18nManager.isRTL ? 'left' : 'right']: 23,
+  },
+  postBtn: {
+    [I18nManager.isRTL ? 'left' : 'right']: 5,
   },
   title: {
     ...Fonts.style.h1,
@@ -31,6 +35,7 @@ export default StyleSheet.create({
     ...Fonts.style.h3,
     color: Colors.white,
     textAlign: 'center',
+    marginTop: 25,
   },
   homeBtnBackground: {
     backgroundColor: Colors.white,
@@ -44,8 +49,8 @@ export default StyleSheet.create({
     shadowRadius: 5,
   },
   homeBtnImage: {
-    width: scale(110),
-    height: scale(110),
+    width: scale(95),
+    height: scale(95),
     flex: 1,
     resizeMode: 'contain',
     position: 'absolute',
@@ -69,12 +74,12 @@ export default StyleSheet.create({
     // left: 0,
     height: 40,
     // flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   bottomBtn: {
     backgroundColor: '#fff',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    padding: 10
-  }
+    padding: 10,
+  },
 })

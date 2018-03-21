@@ -41,7 +41,7 @@ const HomeNav = StackNavigator({
   PostSuccess: {screen: PostSuccessScreen},
 }, {
   ...stackOptions,
-  initialRouteName: 'Home',
+  initialRouteName: 'Find',
 })
 
 const RegisterNav = StackNavigator({

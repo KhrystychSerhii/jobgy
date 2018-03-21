@@ -31,7 +31,7 @@ class JobDetailsScreen extends Component {
       <ScreenContainer>
         <View style={styles.titleWithImagesWrapper}>
           <Image source={images.buildingImg} style={styles.resultsTitleImageLeft} resizeMode='contain' />
-          <PageTitle title={'אחמד אחמד ובניו'} />
+          <PageTitle textStyle={{fontSize: 25}} title={'אחמד אחמד ובניו'} />
           <Image source={images.findDude} style={styles.resultsTitleImage} resizeMode='contain' />
         </View>
         <JobDetails post={this.state.post} />

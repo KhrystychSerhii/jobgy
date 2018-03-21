@@ -24,4 +24,9 @@ export default StyleSheet.create({
     fontWeight: '500',
     // lineHeight: Fonts.size.input + 6,
   },
+  value: {
+    ...Fonts.style.h4,
+    fontWeight: '500',
+    lineHeight: 30,
+  }
 })

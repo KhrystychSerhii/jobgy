@@ -1,6 +1,7 @@
 import { StyleSheet, I18nManager } from 'react-native'
 import { Fonts, Colors, ApplicationStyles } from '../../Themes/index'
 import { scale } from 'react-native-size-matters'
+import { leftProp, rightProp } from '../../Transforms/index'
 
 export default StyleSheet.create({
   titleWithImagesWrapper: {
@@ -10,13 +11,13 @@ export default StyleSheet.create({
   },
   resultsTitleImage: {
     position: 'absolute',
-    right: scale(3),
-    bottom: -5,
-    width: scale(65),
+    [rightProp()]: scale(3),
+    bottom: -10,
+    width: scale(60),
   },
   resultsTitleImageLeft: {
     position: 'absolute',
-    left: scale(12),
+    [leftProp()]: scale(5),
     bottom: scale(11),
     width: scale(45),
   },

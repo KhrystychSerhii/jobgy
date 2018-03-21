@@ -5,7 +5,7 @@ import { scale } from 'react-native-size-matters'
 export default StyleSheet.create({
   touchable: {
     flex: 1,
-    flexDirection: Platform.OS === 'Android' && I18nManager.isRTL ? 'row-reverse' : 'row',
+    // flexDirection: Platform.OS === 'Android' && I18nManager.isRTL ? 'row-reverse' : 'row',
     alignItems: 'center',
     paddingTop: 12,
     paddingBottom: 12,

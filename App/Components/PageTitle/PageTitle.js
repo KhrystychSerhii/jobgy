@@ -4,13 +4,16 @@ import { View, Text, Image } from 'react-native'
 import styles from './styles'
 import Images from '../../Themes/Images'
 
-const PageTitle = ({title, children, large}) => (
-  <View style={styles.titleWrapper}>
-    <Text style={large ? styles.titleLarge : styles.title}>{title}</Text>
-    <Image source={Images.pageTitleBorder} style={styles.border} />
-    {children}
-  </View>
-)
+const PageTitle = ({title, children, large, textStyle, style}) => {
+  const _style = large ? styles.titleLarge : styles.title;
+  return (
+    <View style={[styles.titleWrapper, style]}>
+      <Text style={[_style, textStyle]}>{title}</Text>
+      <Image source={Images.pageTitleBorder} style={styles.border} />
+      {children}
+    </View>
+  )
+}
 
 PageTitle.propTypes = {
   title: PropTypes.string,
@@ -18,4 +21,4 @@ PageTitle.propTypes = {
 
 }
 
-export default PageTitle;
+export default PageTitle

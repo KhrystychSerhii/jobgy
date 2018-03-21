@@ -38,7 +38,7 @@ class FormInput extends React.Component {
     }
 
     return (
-      <WhiteBlock style={_style}>
+      <WhiteBlock style={[_style, {marginBottom: 17}]}>
         <TouchableWithoutFeedback style={{flex: 1}} onPress={this.focusInput}>
           <View style={styles.touchable}>
             <Text style={styles.label} {...labelProps}>{label}</Text>

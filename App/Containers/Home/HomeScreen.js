@@ -11,6 +11,7 @@ import images from '../../Themes/Images'
 import PageTitle from '../../Components/PageTitle'
 import I18n from '../../I18n'
 import ScreenContainer from '../../Components/ScreenContainer'
+import Row from '../../Components/Row/Row'
 
 class HomeScreen extends Component {
   static navigationOptions = {
@@ -35,15 +36,15 @@ class HomeScreen extends Component {
             <Text style={styles.subtitle}>{I18n.t('HOME.SUBTITLE')}</Text>
           </PageTitle>
           <View>
-            <View style={styles.btnRow}>
+            <Row style={styles.btnRow} justifyContent={'space-between'}>
               <HomeBtn
-                imageStyles={{left: -15}} image={images.dude3} onPress={() => this.navigateTo('Find')}
+                imageStyles={styles.findBtn} image={images.dude3} onPress={() => this.navigateTo('Find')}
               >{I18n.t('HOME.FIND_JOB')}</HomeBtn>
-              <HomeBtn imageStyles={{left: 10}} image={images.dude2} onPress={() => this.navigateTo('Post')}>{I18n.t('HOME.POST_JOB')}</HomeBtn>
-            </View>
-            <View style={[styles.btnRow, {justifyContent: 'center'}]}>
+              <HomeBtn imageStyles={styles.postBtn} image={images.dude2} onPress={() => this.navigateTo('Post')}>{I18n.t('HOME.POST_JOB')}</HomeBtn>
+            </Row>
+            <Row style={styles.btnRow} justifyContent={'center'} >
               <HomeBtn image={images.dude1}>{I18n.t('HOME.ALL_BUSINESSES')}</HomeBtn>
-            </View>
+            </Row>
           </View>
         </View>
       </ScreenContainer>

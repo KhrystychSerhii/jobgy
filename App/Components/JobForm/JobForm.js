@@ -46,6 +46,7 @@ class JobForm extends React.Component {
       work_period_from: '',
       work_period_to: '',
       address_from: '',
+      address_to: '',
       location_from: '',
       location_to: '',
     }
@@ -159,6 +160,12 @@ class JobForm extends React.Component {
                     name={'address_from'}
                     onChange={setFieldValue}
                     label={I18n.t('JOB_FORM.ADDRESS_FROM')} value={values.address_from}
+                  />}
+                  {!filters && <FormInput
+                    invalid={!!errors.address_to && touched.address_to}
+                    name={'address_to'}
+                    onChange={setFieldValue}
+                    label={I18n.t('JOB_FORM.ADDRESS_TO')} value={values.address_to}
                   />}
                 </ScrollView>
                 <FormButton
