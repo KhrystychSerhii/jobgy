@@ -15,4 +15,7 @@ export default StyleSheet.create({
     resizeMode: 'contain',
     marginLeft: 15,
   },
+  backBtn: {
+    paddingHorizontal: 20,
+  }
 })

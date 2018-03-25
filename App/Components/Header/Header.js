@@ -1,12 +1,21 @@
 import React from 'react'
-import { View, TouchableHighlight, Image, Text } from 'react-native'
+import { View, TouchableOpacity, Image, Text } from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
 import styles from './styles'
+
 
 export const SidebarBtn = (props) => {
   return (
-    <TouchableHighlight onPress={props.onPress} style={styles.sidemenuBtn}>
+    <TouchableOpacity onPress={props.onPress} style={styles.sidemenuBtn}>
       <Image style={styles.sidemenuBtnImg} source={require('../../Images/sidebar-icon.png')} />
-    </TouchableHighlight>
+    </TouchableOpacity>
+  )
+}
+export const BackBtn = (props) => {
+  return (
+    <TouchableOpacity onPress={props.onPress} style={styles.backBtn}>
+      <Image style={styles.sidemenuBtnImg} source={require('../../Images/back-icon.png')} />
+    </TouchableOpacity>
   )
 }
 

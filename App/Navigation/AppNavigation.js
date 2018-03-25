@@ -6,7 +6,7 @@ import HomeScreen from '../Containers/Home'
 import styles from './Styles/NavigationStyles'
 import RegisterScreen from '../Containers/Register/RegisterScreen'
 import Sidebar from '../Containers/Sidebar/Sidebar'
-import Header, { SidebarBtn } from '../Components/Header/Header'
+import Header, { BackBtn, SidebarBtn } from '../Components/Header/Header'
 import LoginScreen from '../Containers/Login/LoginScreen'
 import FindJobScreen from '../Containers/FindJob/FindJobScreen'
 import SearchResultsScreen from '../Containers/FindJob/SearchResultsScreen'
@@ -19,14 +19,21 @@ import SubscriptionsScreen from '../Containers/Subscriptions/SubscriptionsScreen
 import PaymentScreen from '../Containers/Subscriptions/PaymentScreen'
 
 const stackOptions = {
-  navigationOptions: ({screenProps}) => {
-    const headerSide = Platform.OS === 'android' && I18nManager.isRTL ? 'headerRight' : 'headerLeft'
+  navigationOptions: ({screenProps: {drawerNavigation}, navigation}) => {
+    const isRtl = Platform.OS === 'android' && I18nManager.isRTL
+    const headerSide = isRtl ? 'headerRight' : 'headerLeft'
+    const backbtnSide = !isRtl ? 'headerRight' : 'headerLeft'
 
-    return ({
+    const options = {
       headerStyle: styles.header,
-      [headerSide]: <SidebarBtn onPress={() => {screenProps.drawerNavigation.navigate('DrawerOpen')}} />,
-      headerTitle: <Header />,
-    })
+      [headerSide]: <SidebarBtn onPress={() => {drawerNavigation.navigate('DrawerOpen')}} />,
+
+      headerTitle: <Header drawerNavigation={drawerNavigation} />,
+    }
+    if (drawerNavigation.state.routeName === 'Register' || drawerNavigation.state.routeName === 'Login') {
+      options[backbtnSide] = (<BackBtn onPress={() => {drawerNavigation.goBack()}} />)
+    }
+    return options
   },
 }
 
@@ -41,7 +48,7 @@ const HomeNav = StackNavigator({
   PostSuccess: {screen: PostSuccessScreen},
 }, {
   ...stackOptions,
-  initialRouteName: 'Find',
+  initialRouteName: 'Home',
 })
 
 const RegisterNav = StackNavigator({
