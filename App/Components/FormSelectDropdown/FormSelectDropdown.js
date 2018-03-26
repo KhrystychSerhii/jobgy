@@ -67,7 +67,7 @@ class FormSelectDropdown extends React.Component {
           whiteBlockStyles={_whiteBlockStyles} label={label} labelProps={labelProps} onFocus={this.handleFocus}
         >
           <Row styles={{flex: 1}}>
-            {!!selectedText && <Text style={styles.value}>{selectedText}</Text>}
+            {!!selectedText && <Text style={[styles.value, textAlign: 'left', marginLeft: 'auto']}>{selectedText}</Text>}
             {isValid && <Icon size={30} color={'#4bb748'} name='md-checkmark' />}
           </Row>
         </FormBaseItem>

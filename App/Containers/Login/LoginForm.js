@@ -1,11 +1,14 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { Formik } from 'formik'
 import Yup from 'yup'
 import FormInput from '../../Components/FormInput'
 import I18n from '../../I18n'
 import styles from './styles'
 import FormButton from '../../Components/FormButton'
+import TextButton from '../../Components/TextButton';
+
+import images from '../../Themes/Images';
 
 const validationSchema = Yup.object().shape({
   phone: Yup.string()
@@ -58,6 +61,21 @@ class LoginForm extends React.Component {
                   label={I18n.t('LOGIN.PASSWORD')}
                 />
                 <FormButton onPress={handleSubmit}>{I18n.t('LOGIN.SUBMIT')}</FormButton>
+                <View style={{flex: 0, flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, paddingRight: 15, marginTop: 30}}>
+                  <TextButton
+                    onPress={() => {console.log('press button 2')}}
+                    text={'forgot password?'}
+                  />
+                  <TextButton
+                    onPress={() => {console.log('press button 1')}}
+                    icon={
+                      <View style={styles.textButtonIcon}>
+                        <Text style={styles.textButtonIconText}>+</Text>
+                      </View>
+                    }
+                    text={'create account'}
+                  />
+                </View>
               </View>
             )
           }
