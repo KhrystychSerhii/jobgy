@@ -57,7 +57,7 @@ class FormSelectDropdown extends React.Component {
     }
     return (
       <View
-        ref={e => this.view = e}
+        ref={(e) => { this.view = e }}
         style={[{position: 'relative', flex: 1, marginBottom: 10}]}
         onLayout={event => {
           this.getMeasurements()
@@ -66,8 +66,8 @@ class FormSelectDropdown extends React.Component {
         <FormBaseItem
           whiteBlockStyles={_whiteBlockStyles} label={label} labelProps={labelProps} onFocus={this.handleFocus}
         >
-          <Row styles={{flex: 1}}>
-            {!!selectedText && <Text style={[styles.value, textAlign: 'left', marginLeft: 'auto']}>{selectedText}</Text>}
+          <Row styles={{flex: 1, flexDirection: 'row-reverse', justifyContent: 'flex-start'}}>
+            {!!selectedText && <Text style={[styles.value, {textAlign: 'left'}]}>{selectedText}</Text>}
             {isValid && <Icon size={30} color={'#4bb748'} name='md-checkmark' />}
           </Row>
         </FormBaseItem>

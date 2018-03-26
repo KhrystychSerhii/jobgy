@@ -12,7 +12,7 @@ export default StyleSheet.create({
   titleImage: {
     position: 'absolute',
     [rightProp()]: scale(25),
-    top: -scale(15),
+    top: -scale(25),
     width: scale(60),
   },
 })

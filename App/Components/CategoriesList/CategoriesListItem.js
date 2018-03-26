@@ -8,11 +8,11 @@ const CategoriesListItem = ({item, onSelectCategory, parentWidth}) => {
   return (
     <GradientButton
       onPress={() => onSelectCategory(item.id)}
-      style={[styles.buttonWrapper, parentWidth && {width: (parentWidth - 50) / 3}, item.isSelected && styles.selectedItemStyle]}
+      style={[styles.buttonWrapper, parentWidth && {width: (parentWidth - 50) / 3}, item.isSelected && styles.selectedItemStyle, {padding: 5}]}
     >
       <View style={[styles.itemInner]}>
         <Image source={{uri: AppConfig.baseUrl + item.icon_path}} style={[styles.image, item.size]} />
-        <Text style={[styles.itemText, item.isSelected && styles.selectedItemText]}>{item.title}</Text>
+        <Text style={[styles.itemText, item.isSelected && styles.selectedItemText]} numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text>
       </View>
     </GradientButton>
   )
