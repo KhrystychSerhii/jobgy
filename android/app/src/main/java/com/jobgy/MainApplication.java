@@ -6,16 +6,15 @@ import com.facebook.react.ReactApplication;
 import com.rnfs.RNFSPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.imagepicker.ImagePickerPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.BV.LinearGradient.LinearGradientPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,11 +34,11 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFSPackage(),
             new ImageResizerPackage(),
             new ImagePickerPackage(),
-            new VectorIconsPackage(),
             new LinearGradientPackage(),
+            new RNDeviceInfo(),
             new ReactNativeConfigPackage(),
             new ReactNativeI18n(),
-            new RNDeviceInfo()
+            new VectorIconsPackage()
       );
     }
 
