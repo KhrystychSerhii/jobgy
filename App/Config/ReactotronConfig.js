@@ -1,7 +1,7 @@
 import Config from '../Config/DebugConfig'
 import Immutable from 'seamless-immutable'
 import Reactotron, { networking } from 'reactotron-react-native'
-
+// todo: узнать что такое Reactotron
 if (Config.useReactotron) {
   // https://github.com/infinitered/reactotron for more options!
   Reactotron

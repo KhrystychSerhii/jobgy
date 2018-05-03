@@ -3,25 +3,46 @@ import I18n from '../../I18n'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-import jobs from '../../Config/jobsConfig'
 // Styles
 import styles from './styles'
 import images from '../../Themes/Images'
 import Categories from '../../Components/Categories/Categories'
 import { selectCategories } from '../../Redux/SettingsRedux'
+import { getCategoriesList } from '../../Redux/CategoriesRedux'
+
+import {fetchCategories} from '../../Services/Api';
+import {selectLanguage} from "../../Redux/I18nRedux";
 
 class PostJobScreen extends Component {
-  onSelectCategory = (id) => {
-    this.props.navigation.navigate('Subcategories', {categoryId: id})
+
+  state = {
+    categories: []
+  }
+
+  componentDidMount() {
+    getCategoriesList().then(categories => {
+      this.setState({categories});
+    });
+  }
+
+  onSelectCategory = (category) => {
+    console.log('category', category);
+    this.props.navigation.navigate('PostSubcategories', {categoryId: category.id, subcategories: category.subcategories})
+  }
+
+  onSelectDisabledCategory = (category) => {
+    console.log('disable to select category => ', category);
   }
 
   render () {
     return (
       <Categories
-        categories={this.props.categories}
+        categories={this.state.categories}
         titleImage={images.postDude}
-        title={I18n.t('POST_JOB.TITLE')}
+        title={I18n.t('translation.postAnAdd', {locale: this.props.ln})}
+        isButtonActiveProperty={'is_available_for_create'}
         onSelectCategory={this.onSelectCategory}
+        onSelectDisabledCategory={this.onSelectDisabledCategory}
         titleImageStyles={styles.titleImage}
       />
     )
@@ -30,6 +51,7 @@ class PostJobScreen extends Component {
 
 const mapStateToProps = createStructuredSelector({
   categories: selectCategories(),
+  ln: selectLanguage()
 })
 
 const mapDispatchToProps = (dispatch) => {

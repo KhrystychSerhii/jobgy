@@ -19,7 +19,9 @@ export default StyleSheet.create({
   },
   topInfoWrapper: {
     alignItems: 'center',
-    padding: 35,
+    paddingHorizontal: 35,
+    paddingTop: 35,
+    paddingBottom: 0
   },
   introductionTextWrapper: {
     marginTop: 15,

@@ -10,7 +10,7 @@ class FormButton extends React.Component {
     return (
       <TouchableHighlight style={[styles.btn, style]} onPress={onPress} disabled={disabled}>
         <View style={[styles.btnInner, {justifyContent}]}>
-          <Text style={[styles.txt, textStyle]}>{children}</Text>
+          <Text style={[styles.txt, textStyle]} numberOfLines={1} ellipsizeMode='tail'>{children}</Text>
           {icon && <Image source={icon} style={{width: 20, height: 20}} resizeMode='contain' />}
         </View>
       </TouchableHighlight>

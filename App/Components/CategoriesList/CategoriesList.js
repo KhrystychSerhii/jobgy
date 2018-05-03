@@ -13,7 +13,7 @@ class CategoriesList extends React.Component {
   keyExtractor = (item, index) => index
 
   render () {
-    const {categories, onSelectCategory, contentWidth, selectedCategories} = this.props
+    const {categories, onSelectCategory, contentWidth, selectedCategories, isButtonActiveProperty, onSelectDisabledCategory} = this.props
     const data = categories.map(item => selectedCategories.indexOf(item.id) !== -1 ? {...item, isSelected: true} : item)
     return (
       <View>
@@ -23,7 +23,8 @@ class CategoriesList extends React.Component {
           keyExtractor={this.keyExtractor}
           data={data}
           renderItem={({item}) => <CategoriesListItem
-            parentWidth={contentWidth} onSelectCategory={onSelectCategory} item={item}
+            buttonActive={item[isButtonActiveProperty]}
+            parentWidth={contentWidth} onSelectCategory={onSelectCategory} onSelectDisabledCategory={onSelectDisabledCategory} item={item}
           />}
         />
       </View>
@@ -34,7 +35,9 @@ class CategoriesList extends React.Component {
 CategoriesList.propTypes = {
   categories: PropTypes.array,
   onSelectCategory: PropTypes.func,
+  onSelectDisabledCategory: PropTypes.func,
   contentWidth: PropTypes.number,
   selectedCategories: PropTypes.array,
+  isButtonActiveProperty: PropTypes.string
 }
 export default CategoriesList

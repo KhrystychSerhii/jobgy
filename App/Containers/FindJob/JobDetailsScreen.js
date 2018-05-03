@@ -5,6 +5,8 @@ import get from 'lodash/get'
 // Styles
 import styles from './styles'
 import images from '../../Themes/Images'
+import AppConfig from '../../Config/AppConfig'
+
 import PageTitle from '../../Components/PageTitle'
 import JobDetails from './JobDetails'
 import ScreenContainer from '../../Components/ScreenContainer/ScreenContainer'
@@ -29,12 +31,21 @@ class JobDetailsScreen extends Component {
   render () {
     return (
       <ScreenContainer>
-        <View style={styles.titleWithImagesWrapper}>
-          <Image source={images.buildingImg} style={styles.resultsTitleImageLeft} resizeMode='contain' />
-          <PageTitle textStyle={{fontSize: 25}} title={'אחמד אחמד ובניו'} />
-          <Image source={images.findDude} style={styles.resultsTitleImage} resizeMode='contain' />
-        </View>
-        <JobDetails post={this.state.post} />
+        {
+          this.state.post ?
+            <View style={{
+              position: 'relative',
+              paddingHorizontal: 50
+            }}>
+              <Image source={{uri: `${AppConfig.baseUrl}${this.state.post.category.icon_path}`}} style={{ width: 60, height: 60, position: 'absolute', right: 0, top: 20 }} resizeMode='contain' />
+              <PageTitle textStyle={{fontSize: 25}} title={this.state.post.author.business_name} />
+              <Image source={images.findDude} style={{ width: 60, height: 60, position: 'absolute', left: 0, top: 20 }} resizeMode='contain' />
+            </View> : null
+        }
+        {
+          this.state.post ?
+            <JobDetails post={this.state.post} /> : null
+        }
       </ScreenContainer>
     )
   }

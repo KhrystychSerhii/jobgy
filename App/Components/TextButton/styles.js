@@ -7,7 +7,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'nowrap',
     alignItems: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    maxWidth: '50%'
   },
   icon: {
     width: 25,

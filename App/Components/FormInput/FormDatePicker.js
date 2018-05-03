@@ -31,7 +31,9 @@ class FormDatePicker extends React.Component {
       date: new Date(),
     })
       .then(({action, year, month, day}) => {
-        this.handleChange(getFormattedDate(new Date(year, month, day)))
+        if (year && month && day) {
+          this.handleChange(getFormattedDate(new Date(year, month, day)));
+        }
       })
       .catch(({code, message}) => {
         console.warn('Cannot open date picker', message)
@@ -63,7 +65,7 @@ class FormDatePicker extends React.Component {
       <WhiteBlock style={_style}>
         <TouchableWithoutFeedback style={{flex: 1}} onPress={this.focusInput}>
           <View style={[styles.touchable, {flexDirection: 'column', justifyContent: 'center'}]}>
-            <Text style={[styles.label, {textAlign: 'center'}]} {...labelProps}>{label}</Text>
+            <Text style={[styles.dateLabel, {textAlign: 'center'}]} {...labelProps}>{label}</Text>
             <Text
               disabled
               underlineColorAndroid="transparent"

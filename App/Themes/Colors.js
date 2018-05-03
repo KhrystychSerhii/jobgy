@@ -31,7 +31,8 @@ const colors = {
   grey: '#ccc',
   link: '#1f67b7',
   gradient: ['rgba(0, 0, 0, 0.07)', 'rgba(0, 0, 0, 0)'],
-  red: '#e41313'
+  red: '#e41313',
+  whiteTransparent: 'rgba(255, 255, 255, 0.6)'
 }
 
 export default colors

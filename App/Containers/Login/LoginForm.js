@@ -15,9 +15,9 @@ const validationSchema = Yup.object().shape({
     .trim()
     .required('Required')
     .matches(/^(0(([23489]{1}[0-9]{7})|(5[012345689]{1}[0-9]{7})|'.'(79[23579]{1}[0-9]{6})|(718[0-9]{6})|(72[23]{1}[0-9]{6})|'.'(73[237]{1}[0-9]{6})|(747[0-9]{6})|(76[58]{1}[0-9]{6})|'.'(782[0-9]{6})|(77[0-9]{7})))$/, 'Incorrect number'),
-  password: Yup.string().required('Required'),
+  password: Yup.string().matches(/^.{6,}$/).required('Required'),
 })
-
+// example phone 027777777
 class LoginForm extends React.Component {
   render () {
     return (
@@ -27,7 +27,7 @@ class LoginForm extends React.Component {
             this.props.onSubmit(values)
           }}
           initialValues={{
-            'phone': this.props.phone || '',
+            'phone': this.props.phone || '027777777',
             // 'password': 'secret',
             // phone: '',
             password: '',
@@ -43,6 +43,7 @@ class LoginForm extends React.Component {
                handleSubmit,
                isSubmitting,
                setFieldValue,
+               onCreateAccountPress
              }) => (
               <View>
                 <FormInput
@@ -50,7 +51,7 @@ class LoginForm extends React.Component {
                   onChange={setFieldValue}
                   name="phone"
                   value={values.phone}
-                  label={I18n.t('LOGIN.PHONE')}
+                  label={I18n.t('translation.phone', { locale: this.props.ln })}
                 />
                 <FormInput
                   invalid={!!errors.password && touched.password}
@@ -58,22 +59,22 @@ class LoginForm extends React.Component {
                   onChange={setFieldValue}
                   name="password"
                   value={values.password}
-                  label={I18n.t('LOGIN.PASSWORD')}
+                  label={I18n.t('translation.password', { locale: this.props.ln })}
                 />
-                <FormButton onPress={handleSubmit}>{I18n.t('LOGIN.SUBMIT')}</FormButton>
-                <View style={{flex: 0, flexDirection: 'row', justifyContent: 'space-between', paddingLeft: 15, paddingRight: 15, marginTop: 30}}>
+                <FormButton onPress={handleSubmit}>{I18n.t('translation.login', { locale: this.props.ln })}</FormButton>
+                <View style={{flex: 0, flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
                   <TextButton
-                    onPress={() => {console.log('press button 2')}}
-                    text={'forgot password?'}
+                    onPress={this.props.onForgotPasswordPress}
+                    text={I18n.t('translation.forgotPassword', { locale: this.props.ln })}
                   />
                   <TextButton
-                    onPress={() => {console.log('press button 1')}}
+                    onPress={this.props.onCreateAccountPress}
                     icon={
                       <View style={styles.textButtonIcon}>
                         <Text style={styles.textButtonIconText}>+</Text>
                       </View>
                     }
-                    text={'create account'}
+                    text={I18n.t('translation.createNewAccount')}
                   />
                 </View>
               </View>

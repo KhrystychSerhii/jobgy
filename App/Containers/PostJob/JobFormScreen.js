@@ -5,22 +5,25 @@ import { createStructuredSelector } from 'reselect'
 import { ScrollView } from 'react-native'
 
 // Styles
-import JobForm from '../../Components/JobForm/JobForm'
+import PostJobForm from '../../Components/JobForm/PostJobForm'
 import ScreenContainer from '../../Components/ScreenContainer/ScreenContainer'
 import {
   getCitiesList, getRegionsList, selectAllCities, selectInterests, selectRegions,
   selectRegionsList,
 } from '../../Redux/SettingsRedux'
+import { selectAttributesList } from '../../Redux/AttributesRedux'
+import { selectLanguage } from '../../Redux/I18nRedux';
 import { postNewAd } from '../../Services/Api'
 
 class JobFormScreen extends Component {
 
   handleSubmit = (adData) => {
-    console.log('adData')
-    console.log(adData)
-    console.log('rr')
-    console.log(this.props.navigation.state.params.categoryId)
-    const data = {...adData, category_id: this.props.navigation.state.params.categoryId}
+
+    console.log(this.props.navigation.state.params)
+    const data = {...adData, category_id: this.props.navigation.state.params.subcategoryId}
+    console.log('data')
+    console.log(data)
+
     return postNewAd(data).then((res) => {
       console.log('res')
       console.log(res)
@@ -33,14 +36,24 @@ class JobFormScreen extends Component {
   }
 
   render () {
-    const {regions, interests, regionsObj, cities} = this.props
+    console.log(this.props.navigation.state.params)
+    const {regions, interests, regionsObj, cities, attributes, ln} = this.props;
+    console.log('regionsObj ==> ', regionsObj);
     return (
       <ScreenContainer>
         <ScrollView style={{flex: 1}} contentContainerStyle={{flexGrow: 1, justifyContent: 'flex-start'}}>
-          <JobForm
-            regionsObj={regionsObj} cities={cities} regions={regions}
-            interests={interests} onSubmit={this.handleSubmit}
+          <PostJobForm
+            cities={cities}
+            regions={regions}
+            attributes={attributes}
+            interests={interests}
+            ln={ln}
+            onSubmit={this.handleSubmit}
           />
+          {/*<JobForm*/}
+            {/*regionsObj={regionsObj} cities={cities} regions={regions}*/}
+            {/*interests={interests} attributes={attributes} onSubmit={this.handleSubmit}*/}
+          {/*/>*/}
         </ScrollView>
       </ScreenContainer>
     )
@@ -52,6 +65,8 @@ const mapStateToProps = createStructuredSelector({
   regions: selectRegionsList(),
   regionsObj: selectRegions(),
   cities: selectAllCities(),
+  attributes: selectAttributesList(),
+  ln: selectLanguage()
 })
 
 const mapDispatchToProps = (dispatch) => {

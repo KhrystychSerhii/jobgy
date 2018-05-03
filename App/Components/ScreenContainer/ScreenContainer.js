@@ -15,7 +15,7 @@ class ScreenContainer extends React.Component {
         style={styles.backgroundImage}
         resizeMode='stretch'
       >
-        <ScrollView style={scrollViewStyles} contentContainerStyle={{alignItems: 'center'}}>
+        <ScrollView style={scrollViewStyles} contentContainerStyle={{alignItems: 'center', paddingBottom: 40}}>
           {this.props.children}
         </ScrollView>
         {this.props.fixedToBottomArea}

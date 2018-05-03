@@ -6,11 +6,16 @@ import { scale } from 'react-native-size-matters'
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   form: {flex: 1, width: '90%'},
-  terms: {
+  termsContainer: {
+    position: 'relative',
     marginBottom: 10,
+    paddingHorizontal: 25,
+    flex: 0,
+    justifyContent: 'space-between'
+  },
+  terms: {
     color: Colors.white,
     textAlign: 'center',
-    flex: 1,
     ...Fonts.style.normal
   },
   termsLink: {

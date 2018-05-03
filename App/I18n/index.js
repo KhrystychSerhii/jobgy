@@ -1,4 +1,4 @@
-import I18n from 'react-native-i18n'
+import I18n from './I18n'
 
 const missingTranslationRegex = /^\[missing ".*" translation\]$/
 

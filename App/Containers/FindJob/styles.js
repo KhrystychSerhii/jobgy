@@ -51,7 +51,7 @@ export default StyleSheet.create({
     flex: 1,
     width: '100%',
     paddingVertical: 20,
-    paddingHorizontal: 60,
+    paddingHorizontal: 30,
   },
   jobDetailsItemLabelBlock: {
     flex: 1,
@@ -65,6 +65,10 @@ export default StyleSheet.create({
     color: Colors.white,
     ...Fonts.style.h3,
     opacity: 0.6,
+  },
+  jobDetailsItemInner: {
+    flex: 1,
+    // flexDirection: I18nManager.isRTL ? 'row' : 'row-reverse'
   },
   jobDetailsItemValue: {
     flex: 1,

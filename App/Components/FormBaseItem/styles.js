@@ -23,6 +23,9 @@ export default StyleSheet.create({
     color: Colors.black,
     ...Fonts.style.input,
     fontWeight: '500',
+    width: '48%',
+    paddingLeft: 10,
+    lineHeight: 30,
     // lineHeight: Fonts.size.input + 6,
   },
 })

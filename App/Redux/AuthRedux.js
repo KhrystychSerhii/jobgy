@@ -12,6 +12,10 @@ export const login = (data) => async (dispatch) => {
   return Api.login(data)
 }
 
+export const forgotPassword = (data) => async (dispatch) => {
+  return Api.forgotPassword(data)
+}
+
 export const logout = () => async (dispatch) => {
   httpClient.clearToken(null)
     .then(() => dispatch({type: LOGOUT_CURRENT}))

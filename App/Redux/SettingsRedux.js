@@ -1,9 +1,10 @@
+// todo: непонятно ничего! узнать!
 import { createReducer } from 'reduxsauce'
 import { normalize, schema } from 'normalizr'
 import Immutable from 'seamless-immutable'
 import { createSelector } from 'reselect'
 import { combineReducers } from 'redux'
-import { fetchCities, fetchRegions } from '../Services/Api'
+import { fetchLanguages, fetchCities, fetchRegions } from '../Services/Api'
 
 export const CATEGORIES_LIST_SUCCESS = 'jobjy/settings/CATEGORIES_LIST_SUCCESS'
 export const INTERESTS_LIST_SUCCESS = 'jobjy/settings/INTERESTS_LIST_SUCCESS'
@@ -29,6 +30,12 @@ export const getCitiesList = () => (dispatch) => fetchCities().then((response) =
   if (response.ok) {
     const normalized = normalize(response.data.data, [new schema.Entity('cities')])
     dispatch(citiesListSuccess(normalized.entities, normalized.result))
+  }
+})
+
+export const getLanguagesList = () => (dispatch) => fetchLanguages().then((response) => {
+  if (response.ok) {
+    dispatch(languagesListSuccess(response.data.data))
   }
 })
 

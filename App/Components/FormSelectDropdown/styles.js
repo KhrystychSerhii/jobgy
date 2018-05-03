@@ -26,6 +26,8 @@ export default StyleSheet.create({
   },
   value: {
     ...Fonts.style.h4,
+    alignItems: 'flex-start',
+    textAlign: 'left',
     fontWeight: '500',
     lineHeight: 30,
   }

@@ -14,7 +14,7 @@ class TextButton extends React.Component {
         {
           icon ? this.props.icon : null
         }
-        <Text style={styles.text}>{text}</Text>
+        <Text style={styles.text} numberOfLines={1} ellipsizeMode='tail'>{text}</Text>
       </TouchableOpacity>
     )
   }

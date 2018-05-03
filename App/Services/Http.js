@@ -72,6 +72,14 @@ class Http {
   post (endpoint, data, config) {
     return this.http.post(endpoint, data, config)
   }
+
+  put (endpoint, data, config) {
+    return this.http.put(endpoint, data, config)
+  }
+
+  delete (endpoint, params) {
+    return this.http.delete(endpoint, {params});
+  }
 }
 
 const httpClient = new Http()

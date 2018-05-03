@@ -1,7 +1,7 @@
 import { normalize, schema } from 'normalizr'
 import { fetchCategories, fetchCities, fetchInterests, fetchLanguages, fetchRegions } from '../Services/Api'
 import {
-  categoriesListSuccess, citiesListSuccess, getCitiesList, getRegionsList, interestsListSuccess, languagesListSuccess,
+  categoriesListSuccess, citiesListSuccess, getCitiesList, getRegionsList, getLanguagesList, interestsListSuccess, languagesListSuccess,
   regionsListSuccess,
 } from './SettingsRedux'
 import httpClient from '../Services/Http'
@@ -42,6 +42,7 @@ export const startup = () => async (dispatch) => {
     }
     dispatch(getCitiesList())
     dispatch(getRegionsList())
+    dispatch(getLanguagesList())
 
   } catch (e) {
     console.log('e')

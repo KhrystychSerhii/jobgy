@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { Text, View } from 'react-native'
 import isArray from 'lodash/isArray'
 
+import CheckMark from '../../Components/CheckMark';
+
 import FormBaseItem from '../FormBaseItem'
 import Row from '../Row'
 import Dropdown from '../Dropdown/Dropdown'
@@ -19,15 +21,17 @@ class FormSelectDropdown extends React.Component {
     this.setState({isOpen: true})
   }
   handleChange = (value) => {
-    console.log('value')
-    console.log(value)
-    this.props.onChange(this.props.name, value)
     if (!this.props.multiple) {
+      this.props.onChange(this.props.name, value)
       this.onClose()
     }
   }
 
-  handleConfirm = () => {
+  handleConfirm = (value) => {
+    console.log('value', value);
+    if (this.props.multiple) {
+      this.props.onChange(this.props.name, value);
+    }
     this.onClose()
   }
   onClose = () => {
@@ -42,7 +46,7 @@ class FormSelectDropdown extends React.Component {
   }
 
   render () {
-    const {label, labelProps, invalid, values, multiple, selectedItems, whiteBlockStyles, selectedText, valueField, textField} = this.props
+    const {label, labelProps, invalid, values, multiple, selectedItems, whiteBlockStyles, selectedText, valueField, textField, ln} = this.props
     const isValid = !!selectedText;
     const {offsetY, width, offsetX} = this.state
     if (multiple && !isArray(selectedItems)) {
@@ -53,7 +57,7 @@ class FormSelectDropdown extends React.Component {
       _whiteBlockStyles = {...whiteBlockStyles, borderWidth: 1, borderColor: '#f00'}
     }
     if (!isValid) {
-      _whiteBlockStyles = {..._whiteBlockStyles, backgroundColor: 'rgba(255, 255, 255, 0.8)'}
+      _whiteBlockStyles = {..._whiteBlockStyles, backgroundColor: '#CFD5E1'} // rgba(255, 255, 255, 0.8)
     }
     return (
       <View
@@ -66,9 +70,10 @@ class FormSelectDropdown extends React.Component {
         <FormBaseItem
           whiteBlockStyles={_whiteBlockStyles} label={label} labelProps={labelProps} onFocus={this.handleFocus}
         >
-          <Row styles={{flex: 1, flexDirection: 'row-reverse', justifyContent: 'flex-start'}}>
-            {!!selectedText && <Text style={[styles.value, {textAlign: 'left'}]}>{selectedText}</Text>}
-            {isValid && <Icon size={30} color={'#4bb748'} name='md-checkmark' />}
+          <Row width={'48%'} styles={{flex: 1, flexDirection: 'row-reverse', paddingRight: 15, paddingLeft: 5}} justifyContent={'flex-start'}>
+            {!!selectedText && <Text style={[styles.value, {textAlign: 'left', paddingBottom: 4}]} numberOfLines={1} ellipsizeMode='tail'>{selectedText}</Text>}
+            {!selectedText && <Icon size={30} color={'#303030'} name='ios-arrow-down' />}
+            {isValid && <CheckMark color={'#4bb748'} />}
           </Row>
         </FormBaseItem>
         {this.state.isOpen && <Dropdown
@@ -84,6 +89,7 @@ class FormSelectDropdown extends React.Component {
           onChange={this.handleChange}
           multiple={multiple}
           width={width}
+          ln={ln}
         />}
       </View>
     )
@@ -101,6 +107,7 @@ FormSelectDropdown.propTypes = {
   whiteBlockStyles: PropTypes.any,
   textField: PropTypes.string,
   valueField: PropTypes.string,
+  ln: PropTypes.any,
 }
 
 export default FormSelectDropdown

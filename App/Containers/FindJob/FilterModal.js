@@ -12,11 +12,11 @@ import I18n from '../../I18n'
 import styles from './styles'
 import FormSelectDropdown from '../../Components/FormSelectDropdown/FormSelectDropdown'
 import DropdownList from '../../Components/FormSelectDropdown/DropdownList'
-import JobForm from '../../Components/JobForm/JobForm'
+import FindJobForm from '../../Components/JobForm/FindJobForm'
 
 class FilterModal extends React.Component {
   render () {
-    const {interests, regions, regionsObj, filters, cities, onSubmit} = this.props;
+    const {interests, regions, regionsObj, filters, cities, onSubmit, onReset, ln} = this.props;
     return (
       <ModalWrapper
         onClose={this.props.onModalClose}
@@ -30,20 +30,20 @@ class FilterModal extends React.Component {
               <Row justifyContent='space-around' width={150}>
                 <Icon name='ios-arrow-back' size={40} color={Colors.white} />
                 <Image source={Images.filterIcon} style={{width: 25}} resizeMode={'contain'} />
-                <Text style={styles.modalHeaderText}>{I18n.t('FILTER_MODAL.BACK_BTN_TEXT')}</Text>
+                <Text style={styles.modalHeaderText}>{I18n.t('translation.filterAd', {locale: ln})}</Text>
               </Row>
             </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={onReset}>
             <View style={{justifyContent: 'center'}}>
               <Text
                 style={[styles.modalHeaderText, {textDecorationLine: 'underline'}]}
-              >{I18n.t('FILTER_MODAL.RESET')}</Text>
+              >{I18n.t('translation.resetFilters', {locale: ln})}</Text>
             </View>
           </TouchableWithoutFeedback>
         </Row>
         <ScrollView style={{flex: 1}} contentContainerStyle={{flexGrow: 1, justifyContent: 'flex-start'}}>
-          <JobForm onSubmit={onSubmit} cities={cities} filters={filters} interests={interests} regions={regions} regionsObj={regionsObj}/>
+          <FindJobForm onSubmit={onSubmit} onReset={onReset} cities={cities} filters={filters} interests={interests} regions={regions} regionsObj={regionsObj} ln={ln} />
         </ScrollView>
       </ModalWrapper>
     )
@@ -53,7 +53,8 @@ class FilterModal extends React.Component {
 FilterModal.propTypes = {
   modalVisible: PropTypes.bool,
   onModalClose: PropTypes.func,
-  interests: PropTypes.array
+  interests: PropTypes.array,
+  ln: PropTypes.any
 }
 
 export default FilterModal

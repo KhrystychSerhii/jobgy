@@ -53,6 +53,10 @@ const images = {
   postSuccess: require('../Images/post-success-img.png'),
   pageTitleBorder: require('../Images/page-title-border.png'),
   addPhoto: require('../Images/add-photo-icon.png'),
+  bellIcon: require('../Images/bell-icon.png'),
+  premiumIcon: require('../Images/premium.png'),
+  starIcon: require('../Images/star.png'),
+  camera: require('../Images/camera.png')
 }
 
 export default images

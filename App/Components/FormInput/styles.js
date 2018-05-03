@@ -11,6 +11,7 @@ export default StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     flexWrap: 'wrap',
+    alignItems: 'center'
   },
   input: {
     flexGrow: 2,
@@ -23,6 +24,13 @@ export default StyleSheet.create({
     color: Colors.black,
     ...Fonts.style.input,
     fontWeight: '500',
+    width: '50%',
     // lineHeight: Fonts.size.input + 6,
   },
+  dateLabel: {
+    color: Colors.black,
+    ...Fonts.style.input,
+    fontWeight: '500',
+    width: '90%',
+  }
 })

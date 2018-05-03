@@ -13,9 +13,9 @@ class FormBaseItem extends React.Component {
       <View style={{height: 80}}>
         <WhiteBlock style={whiteBlockStyles}>
           <TouchableOpacity style={{flex: 1}} onPress={onFocus}>
-            <Row justifyContent={'space-between'} styles={[styles.touchable, {flex: 1}]}>
+            <Row justifyContent={'space-around'} styles={[styles.touchable, {flex: 1}]}>
               {children}
-              <Text style={styles.label} {...labelProps}>{label}</Text>
+              <Text style={styles.label} {...labelProps} numberOfLines={1} ellipsizeMode='tail'>{label}</Text>
             </Row>
           </TouchableOpacity>
         </WhiteBlock>

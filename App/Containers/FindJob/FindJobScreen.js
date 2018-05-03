@@ -7,26 +7,47 @@ import I18n from '../../I18n'
 import images from '../../Themes/Images'
 import Categories from '../../Components/Categories/Categories'
 import { selectCategories } from '../../Redux/SettingsRedux'
+import { getCategoriesList } from '../../Redux/CategoriesRedux'
+import { selectLanguage } from '../../Redux/I18nRedux';
 
 class FindJobScreen extends Component {
-  onSelectCategory = (categoryId) => {
-    this.props.navigation.navigate('Results', {categoryId})
+
+  state = {
+    categories: []
+  };
+
+  componentDidMount() {
+    getCategoriesList().then(categories => {
+      this.setState({categories});
+    });
   }
 
+  onSelectCategory = (category) => {
+    this.props.navigation.navigate('FindSubcategories', {categoryId: category.id, subCategories: category.subcategories})
+  }
+
+  onSelectDisabledCategory = (category) => {
+    console.log('disable to select category', category);
+  };
+
   render () {
+    console.log('this.props.categories => ', this.props.categories);
     return (
       <Categories
-        categories={this.props.categories}
+        categories={this.state.categories}
         titleImage={images.findDude}
-        title={I18n.t('FIND_JOB.TITLE')}
+        title={I18n.t('translation.findAnAdd', {locale: this.props.ln})}
+        isButtonActiveProperty={'is_available'}
         onSelectCategory={this.onSelectCategory}
+        onSelectDisabledCategory={this.onSelectDisabledCategory}
       />
     )
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  categories: selectCategories()
+  categories: selectCategories(),
+  ln: selectLanguage()
 })
 
 const mapDispatchToProps = (dispatch) => {

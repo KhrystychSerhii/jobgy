@@ -1,5 +1,5 @@
-import { StyleSheet, Dimensions } from 'react-native'
-import { Colors } from '../../Themes'
+import { StyleSheet, Dimensions, I18nManager } from 'react-native'
+import { Colors, Fonts } from '../../Themes'
 
 export default StyleSheet.create({
   btn: {

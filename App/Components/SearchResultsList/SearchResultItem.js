@@ -13,18 +13,21 @@ const InfoItem = ({label, value, size}) => (
   </View>
 )
 
-const SearchResultItem = ({item, onSelect}) => (
-  <TouchableWithoutFeedback onPress={() => onSelect()}>
+const SearchResultItem = ({item, onSelect, userInfo}) => (
+  <TouchableWithoutFeedback onPress={() => userInfo ? onSelect(item.id) : null}>
     <View style={styles.itemWrapper}>
       <View style={styles.infoWrapper}>
-        <InfoItem label={I18n.t('SEARCH_RESULTS.CATEGORY')} value={item.category} size='lg' />
-        <InfoItem label={I18n.t('SEARCH_RESULTS.SERVICE_TYPE')} value={item.serviceType} size='sm' />
-        <InfoItem label={I18n.t('SEARCH_RESULTS.AREA')} value={item.area} size='lg' />
-        <InfoItem label={I18n.t('SEARCH_RESULTS.DATE')} value={item.date} size='sm' />
+        <InfoItem label={I18n.t('translation.domain')} value={item.category} size='lg' />
+        <InfoItem label={I18n.t('translation.typeOfServce')} value={item.serviceType} size='sm' />
+        <InfoItem label={I18n.t('translation.area')} value={item.area} size='lg' />
+        <InfoItem label={I18n.t('translation.workPeriod')} value={item.date} size='sm' />
       </View>
-      <View style={styles.arrowWrapper}>
-        <Icon name='ios-arrow-back' size={40} color={Colors.black} />
-      </View>
+      {
+        userInfo ?
+          <View style={styles.arrowWrapper}>
+            <Icon name='ios-arrow-back' size={40} color={Colors.black} />
+          </View> : null
+      }
     </View>
   </TouchableWithoutFeedback>
 )

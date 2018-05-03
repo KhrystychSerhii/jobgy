@@ -8,13 +8,13 @@ import SearchResultItem from './SearchResultItem'
 class SearchResultsList extends React.Component {
   keyExtractor = (item, index) => index;
   render () {
-    const {results, onSelect} = this.props
+    const {results, onSelect, userInfo} = this.props
     return (
       <View>
         <FlatList
           keyExtractor={this.keyExtractor}
           data={results}
-          renderItem={({item}) => <SearchResultItem item={item} onSelect={onSelect} />}
+          renderItem={({item}) => <SearchResultItem item={item} onSelect={onSelect} userInfo={userInfo} />}
         />
       </View>
     )
@@ -23,5 +23,6 @@ class SearchResultsList extends React.Component {
 SearchResultsList.propTypes = {
   results: PropTypes.array,
   onSelect: PropTypes.func,
+  userInfo: PropTypes.any
 }
 export default SearchResultsList
