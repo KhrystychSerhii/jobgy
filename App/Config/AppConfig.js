@@ -1,7 +1,7 @@
 // Simple React Native specific changes
 
 import '../I18n/I18n'
-dev
+// dev
 const baseUrl = 'https://jobgy.dias.team'
 // prod
 // const baseUrl = 'https://app.jobgy.co.il'
