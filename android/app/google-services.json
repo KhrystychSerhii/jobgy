@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "753957989233",
+    "firebase_url": "https://jobjy-24f72.firebaseio.com",
+    "project_id": "jobjy-24f72",
+    "storage_bucket": "jobjy-24f72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:753957989233:android:85a7a14e0546580b",
+        "android_client_info": {
+          "package_name": "com.jobgy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "753957989233-9e4ubilm9b4tvfapg5sdj2iro4bq9d2v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaKCw3i9ElNMylQ6_6tv28oINVyqUljww"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
