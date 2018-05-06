@@ -87,6 +87,7 @@ const OptionalAttributesFields = ({attribute, values, errors, touched, ln, setFi
               invalid={!!errors.text && touched.text}
               name={'text'}
               onChange={setFieldValue}
+              keyboardType={'number'}
               label={I18n.t('translation.amount', {locale: ln})}
             />
           </View>

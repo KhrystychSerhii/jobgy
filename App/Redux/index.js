@@ -11,7 +11,9 @@ export const reducers = combineReducers({
   user: require('./UserRedux').reducer,
   filter: require('./FilterRedux').reducer,
   language: require('./I18nRedux').reducer,
-  attributes: require('./AttributesRedux').reducer
+  attributes: require('./AttributesRedux').reducer,
+  ad: require('./AdsRedux').reducer,
+  questions: require('./QuestionsRedux').reducer,
 })
 
 export default () => {

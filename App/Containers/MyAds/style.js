@@ -70,12 +70,15 @@ export default StyleSheet.create({
     backgroundColor: Colors.red
   },
   greenButton: {
-    backgroundColor: Colors.green
+    // backgroundColor: Colors.green
+    backgroundColor: '#28a745'
+  },
+  disabledGreenButton: {
+    backgroundColor: '#52b558'
   },
   blueButton: {
     backgroundColor: Colors.darkBlue
   },
-
   adItemFooter: {
     flex: 0,
     flexDirection: 'row',
@@ -83,5 +86,43 @@ export default StyleSheet.create({
   },
   adItemFooterInnerPart: {
     width: '40%'
+  },
+
+  ratingFieldWrapper: {
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.white,
+    marginBottom: 20
+  },
+  ratingFieldTitleWrapper: {
+    marginBottom: 10
+  },
+  ratingFieldTitleText: {
+    ...Fonts.style.h3,
+    fontWeight: '600',
+    color: Colors.white,
+    textAlign: 'center'
+  },
+  ratingFieldStarsWrapper: {
+    flex: 0,
+    flexDirection: 'row',
+    marginBottom: 20
+  },
+  ratingFieldStar: {
+    width: 50,
+    height: 50,
+    marginHorizontal: 5,
+    opacity: .2
+  },
+  ratingFiledFooterWrapper: {
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 40,
+    marginBottom: 20
+  },
+  ratingFiledFooterText: {
+    ...Fonts.style.h4,
+    fontWeight: '600',
+    color: Colors.white,
   }
 })

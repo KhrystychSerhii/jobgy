@@ -113,14 +113,14 @@ const SubscriptionItem = ({item, onSelect, locale}) => {
     </View>
   )
 }
-const SubscriptionsList = ({list, onSelect}) => (
+const SubscriptionsList = ({list, onSelect, ln}) => (
   <View
     style={{width: '100%'}}
   >
     <FlatList
       keyExtractor={(item, next) => item.id}
       data={list}
-      renderItem={({item}) => <SubscriptionItem item={item} onSelect={onSelect} locale={this.props.ln} />}
+      renderItem={({item}) => <SubscriptionItem item={item} onSelect={onSelect} locale={ln} />}
     />
   </View>
 )
@@ -134,7 +134,6 @@ class SubscriptionsScreen extends React.Component {
 
   componentDidMount() {
     getSubscriptions().then(subscriptions => {
-      console.log('subscriptions', subscriptions);
       this.setState({subscriptions});
     });
   }
@@ -154,10 +153,11 @@ class SubscriptionsScreen extends React.Component {
 
   render () {
     const {showModal, selectedCategories} = this.state
+    const {ln} = this.props
     return (
       <ScreenContainer bgWithPicture>
-        <PageTitle title={I18n.t('translation.mySubscription', {locale: this.props.ln})} />
-        <SubscriptionsList onSelect={this.onSelect} list={this.state.subscriptions} />
+        <PageTitle title={I18n.t('translation.mySubscription', {locale: ln})} />
+        <SubscriptionsList onSelect={this.onSelect} list={this.state.subscriptions} ln={ln} />
         <ChooseCategoriesModal
           onModalClose={this.closeModal}
           modalVisible={showModal}
@@ -174,6 +174,8 @@ const mapStateToProps = createStructuredSelector({
   ln: selectLanguage()
 });
 
-const mapDispatchToProps = (dispatch) => {}
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionsScreen);

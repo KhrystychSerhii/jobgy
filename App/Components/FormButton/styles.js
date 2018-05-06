@@ -4,10 +4,10 @@ import { Colors, Fonts } from '../../Themes'
 export default StyleSheet.create({
   btn: {
     // marginBottom: 20,
-    backgroundColor: Colors.darkBlue,
     paddingHorizontal: 10,
     paddingVertical: 20,
     // paddingTop: 7,
+    borderWidth: 1,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center'

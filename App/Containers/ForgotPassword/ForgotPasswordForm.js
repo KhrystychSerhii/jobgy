@@ -45,6 +45,7 @@ class ForgotPasswordForm extends React.Component {
                     onChange={setFieldValue}
                     name='phone'
                     value={values.phone}
+                    keyboardType={'phone-pad'}
                     label={I18n.t('translation.phoneNumber')}
                   />
                   <FormButton

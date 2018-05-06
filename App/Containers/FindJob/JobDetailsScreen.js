@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, View } from 'react-native'
+import { Image, View, Share } from 'react-native'
 import { connect } from 'react-redux'
 import get from 'lodash/get'
 // Styles
@@ -11,6 +11,10 @@ import PageTitle from '../../Components/PageTitle'
 import JobDetails from './JobDetails'
 import ScreenContainer from '../../Components/ScreenContainer/ScreenContainer'
 import { fetchPostById } from '../../Services/Api'
+
+import { createStructuredSelector } from 'reselect'
+
+import { selectLanguage } from '../../Redux/I18nRedux'
 
 class JobDetailsScreen extends Component {
   state = {
@@ -25,6 +29,12 @@ class JobDetailsScreen extends Component {
           this.setState({post: res.data.data})
         })
     }
+  }
+
+  share(post) {
+    Share.share({
+      message: `Share text!! \n${post.category.title} category from ${post.author.name}. \nCall me ${post.author.phone}.`,
+    })
   }
 
 
@@ -44,16 +54,16 @@ class JobDetailsScreen extends Component {
         }
         {
           this.state.post ?
-            <JobDetails post={this.state.post} /> : null
+            <JobDetails post={this.state.post} onShare={this.share.bind(this)} ln={this.props.ln} /> : null
         }
       </ScreenContainer>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {}
-}
+const mapStateToProps = createStructuredSelector({
+  ln: selectLanguage()
+})
 
 const mapDispatchToProps = (dispatch) => {
   return {}

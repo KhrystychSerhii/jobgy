@@ -18,7 +18,7 @@ const validationSchema = Yup.object().shape({
   business_name: Yup.string().required('Required'),
   business_number: Yup.string().required('Required'),
   description: Yup.string(),
-  email: Yup.string().required('Email is required!').email('Invalid email address'),
+  email: Yup.string().email('Invalid email address'),
   interest_id: Yup.number().required('Required'),
   name: Yup.string().required('Required'),
 });
@@ -27,8 +27,6 @@ class SettingsForm extends React.Component {
 
   render () {
     const {onSubmit, userInfo, interests, ln} = this.props
-    console.log('userInfo', userInfo);
-    console.log('interests', interests);
     const initialValues = {
       address: userInfo.address,
       business_name: userInfo.business_name,
@@ -45,7 +43,6 @@ class SettingsForm extends React.Component {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values, {setSubmitting, setErrors}) => {
-          console.log('values => ', values);
           onSubmit(values)
             .catch((e) => {
               e.data.errors && setErrors(e.data.errors)
@@ -84,6 +81,7 @@ class SettingsForm extends React.Component {
                     invalid={!!errors.business_number && touched.business_number}
                     name={'business_number'}
                     onChange={setFieldValue}
+                    keyboardType={'numeric'}
                     label={I18n.t('translation.businessNumber', {locale: ln})}
                     value={values.business_number}
                   />
@@ -95,9 +93,10 @@ class SettingsForm extends React.Component {
                     value={values.address}
                   />
                   <FormInput
-                    invalid={!!errors.email && touched.email}
+                    invalid={!!errors.email && !!values.email && touched.email}
                     name={'email'}
                     onChange={setFieldValue}
+                    keyboardType={'email-address'}
                     label={I18n.t('translation.email', {locale: ln})}
                     value={values.email}
                   />
@@ -114,18 +113,15 @@ class SettingsForm extends React.Component {
                     ln={ln}
                   />
                   <FormInput
-                    invalid={!!errors.description && touched.description}
+                    invalid={!!errors.description && !!values.description && touched.description}
                     name={'description'}
                     onChange={setFieldValue}
                     label={I18n.t('translation.description', {locale: ln})}
                     value={values.description}
                   />
 
-
                 </ScrollView>
                 <FormButton
-                  style={{backgroundColor: Colors.lightBlue}}
-                  // disabled={!filters && (Object.keys(errors).length > 0 || !this.state.regionFrom)}
                   onPress={handleSubmit}
                 >{I18n.t('translation.saveChanges', {locale: ln})}</FormButton>
               </View>

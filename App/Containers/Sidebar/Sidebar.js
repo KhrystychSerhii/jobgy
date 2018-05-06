@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 // todo: узнать что такое reselect
 import { createStructuredSelector } from 'reselect'
 
+import { NavigationActions } from 'react-navigation'
+
 // Styles
 import styles from './styles'
 import GuestMenu from './GuestMenu'
@@ -25,6 +27,8 @@ class Sidebar extends Component {
     const {languages, navigation, userInfo, logout, clearCurrentUser, updateCurrentLanguage} = this.props
 
     const logoutAndClear = () => {
+      // todo: подумать о том, как выйти из Home stackNavigation
+      navigation.navigate('Home');
       logout();
       clearCurrentUser();
     }
@@ -41,7 +45,12 @@ class Sidebar extends Component {
               logoutAndClear={logoutAndClear}
               navigate={navigation.navigate}
             />
-          : <GuestMenu languages={languages} ln={this.props.ln} changeLanguage={updateCurrentLanguage} navigate={navigation.navigate} />
+          : <GuestMenu
+              languages={languages}
+              ln={this.props.ln}
+              changeLanguage={updateCurrentLanguage}
+              navigate={navigation.navigate}
+            />
         }
       </View>
     )

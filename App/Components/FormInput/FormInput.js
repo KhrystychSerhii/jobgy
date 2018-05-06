@@ -6,6 +6,10 @@ import WhiteBlock from '../WhiteBlock'
 import styles from './styles'
 
 class FormInput extends React.Component {
+  static defaultProps = {
+    keyboardType: 'default',
+  };
+
   getInput = (e) => {
     this.inputRef = e
   }

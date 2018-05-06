@@ -1,4 +1,4 @@
-package com.jobgy;
+package co.il.jobgy;
 
 import com.facebook.react.ReactActivity;
 

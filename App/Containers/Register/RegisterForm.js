@@ -95,6 +95,7 @@ class RegisterForm extends React.Component {
                     invalid={!!errors.business_number && touched.business_number}
                     onChange={setFieldValue}
                     name="business_number"
+                    keyboardType={'numeric'}
                     value={values.business_number}
                     label={I18n.t('translation.businessNumber', {locale: this.props.ln})}
                   />
@@ -110,6 +111,7 @@ class RegisterForm extends React.Component {
                     onChange={setFieldValue}
                     name="phone"
                     value={values.phone}
+                    keyboardType={'phone-pad'}
                     label={I18n.t('translation.phone', {locale: this.props.ln})}
                   />
                   <FormInput
@@ -117,6 +119,7 @@ class RegisterForm extends React.Component {
                     onChange={setFieldValue}
                     name="email"
                     value={values.email}
+                    keyboardType={'email-address'}
                     label={I18n.t('translation.email', {locale: this.props.ln})}
                   />
                   <FormSelectDropdown
