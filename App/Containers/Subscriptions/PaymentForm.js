@@ -12,10 +12,10 @@ const PaymentForm = ({onMakePayment}) => {
       <FormInput label={I18n.t('SUBSCRIPTIONS.CARD_NUMBER')} />
       <Row justifyContent={'space-between'}>
         <View style={{width: '49%'}}>
-          <FormInput label={I18n.t('SUBSCRIPTIONS.CARD_SECURITY_CODE')} />
+          <FormInput keyboardType={'numeric'} label={I18n.t('SUBSCRIPTIONS.CARD_SECURITY_CODE')} />
         </View>
         <View style={{width: '49%'}}>
-          <FormInput label={I18n.t('SUBSCRIPTIONS.CARD_VALIDITY')} />
+          <FormInput keyboardType={'numeric'} label={I18n.t('SUBSCRIPTIONS.CARD_VALIDITY')} />
         </View>
       </Row>
       <FormButton onPress={onMakePayment}>{I18n.t('SUBSCRIPTIONS.MAKE_PAYMENT')}</FormButton>

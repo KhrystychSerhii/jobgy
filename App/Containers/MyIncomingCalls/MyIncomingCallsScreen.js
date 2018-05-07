@@ -92,6 +92,7 @@ class MyIncomingCallsScreen extends React.Component {
         <View style={{flex: 0, width: '100%', paddingHorizontal: '10%'}}>
           <FormInput
             name={'searchBy'}
+            keyboardType={'phone-pad'}
             onChange={this.onSearchByChanged.bind(this)}
             label={I18n.t('translation.search', {locale: this.props.ln})}
             value={this.state.searchBy}
@@ -104,7 +105,7 @@ class MyIncomingCallsScreen extends React.Component {
               numColumns={1}
               style={{width: '100%'}}
               keyExtractor={this.keyExtractor}
-              data={this.state.calls.filter(item => item.business_phone.indexOf(this.state.searchBy) >= 0)}
+              data={this.state.calls.filter(item => item.business_phone ? (item.business_phone.indexOf(this.state.searchBy) === 0) : false)}
               extraData={this.state}
               renderItem={({item}) =>
                 <IncomingCallItem item={item} ln={this.props.ln} />

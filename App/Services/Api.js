@@ -36,6 +36,13 @@ export const fetchSubscriptions = () => httpClient.get('/subscriptions/all');
 
 // Ads
 export const fetchAds = (type = 'active') => httpClient.get(`/posts/own/${type}`);
+export const jumpAd = (id) => httpClient.post(`/posts/own/${id}/jump`);
+export const cancelAd = (id) => httpClient.post(`/posts/own/${id}/cancel`);
+// ad rating
+export const fetchAdRating = (id) => httpClient.get(`/posts/own/${id}/rating`);
+
+// Questions
+export const fetchQuestions = (id) => httpClient.get('/questions/all');
 
 // Notifications Manage
 export const toggleNotificationCategory = (categoryId) => httpClient.put(`/categories/${categoryId}/notify/toggle`);

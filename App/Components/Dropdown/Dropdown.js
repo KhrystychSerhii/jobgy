@@ -147,7 +147,7 @@ class Dropdown extends Component {
             style={styles.contentWrapper}>
             <FlatList
               keyExtractor={this.keyExtractor}
-              data={this.state.searchBy && textField ? values.filter(item => item[textField].indexOf(this.state.searchBy) === 0) : values}
+              data={this.state.searchBy && textField ? values.filter(item => (item[textField] && item[textField].toLowerCase()) ? (item[textField].toLowerCase().indexOf(this.state.searchBy) === 0) : false) : values}
               renderItem={
                 ({item, index}) => {
                   const text = textField ? item[textField] : item
