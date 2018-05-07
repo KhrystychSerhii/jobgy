@@ -1,27 +1,58 @@
 {
   "project_info": {
-    "project_number": "753957989233",
-    "firebase_url": "https://jobjy-24f72.firebaseio.com",
-    "project_id": "jobjy-24f72",
-    "storage_bucket": "jobjy-24f72.appspot.com"
+    "project_number": "45163624019",
+    "firebase_url": "https://jobgy-b42fc.firebaseio.com",
+    "project_id": "jobgy-b42fc",
+    "storage_bucket": "jobgy-b42fc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:753957989233:android:85a7a14e0546580b",
+        "mobilesdk_app_id": "1:45163624019:android:47bc33fea1c932c4",
         "android_client_info": {
-          "package_name": "com.jobgy"
+          "package_name": "co.il.jobgy"
         }
       },
       "oauth_client": [
         {
-          "client_id": "753957989233-9e4ubilm9b4tvfapg5sdj2iro4bq9d2v.apps.googleusercontent.com",
+          "client_id": "45163624019-rmd1ippikleib39v1vdbhuutf8b0bc1v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBaKCw3i9ElNMylQ6_6tv28oINVyqUljww"
+          "current_key": "AIzaSyBLT4zGslBbwPZFIho7LqKmD7wj_C2v2LQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45163624019:android:a22bcfc2ba83d09a",
+        "android_client_info": {
+          "package_name": "jobgy.spiralsoft.co.il"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "45163624019-rmd1ippikleib39v1vdbhuutf8b0bc1v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLT4zGslBbwPZFIho7LqKmD7wj_C2v2LQ"
         }
       ],
       "services": {

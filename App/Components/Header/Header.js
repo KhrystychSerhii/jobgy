@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View, TouchableOpacity, Image, Text } from 'react-native'
 import { connect } from 'react-redux'
+import FCM, { FCMEvent } from 'react-native-fcm'
 import { createStructuredSelector } from 'reselect'
 import AppConfig from '../../Config/AppConfig'
 import I18n from '../../I18n'
@@ -9,8 +10,8 @@ import I18n from '../../I18n'
 import { NavigationActions } from 'react-navigation'
 
 import { selectUserInfo } from '../../Redux/UserRedux'
-import { selectLanguage } from '../../Redux/I18nRedux';
-import { getUnreadNotificationsAmount } from '../../Redux/NotificationRedux';
+import { selectLanguage } from '../../Redux/I18nRedux'
+import { getUnreadNotificationsAmount } from '../../Redux/NotificationRedux'
 
 import { Images } from '../../Themes'
 import styles from './styles'
@@ -18,7 +19,9 @@ import styles from './styles'
 export const SidebarBtn = ({onPress}) => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.headerButton, styles.sidemenuBtn]}>
-      <Image style={[styles.sidemenuBtnImg, styles.headerButtonInner]} source={require('../../Images/sidebar-icon.png')} />
+      <Image
+        style={[styles.sidemenuBtnImg, styles.headerButtonInner]} source={require('../../Images/sidebar-icon.png')}
+      />
     </TouchableOpacity>
   )
 }
@@ -37,7 +40,8 @@ export const Bell = ({badgeValue = 0, onPress}) => {
         <Text
           numberOfLines={1}
           ellipsizeMode='head'
-          style={styles.badgeText}>
+          style={styles.badgeText}
+        >
           {badgeValue}
         </Text>
       </View>
@@ -59,37 +63,63 @@ export const UserName = ({userName, userImage, onPress, ln}) => {
   )
 }
 
-let drawerRouteNames = {};
+let drawerRouteNames = {}
+
 class Header extends React.Component {
   state = {
-    notificationAmount: 0
+    notificationAmount: 0,
   }
 
-  drawerOpen() {
+  componentDidMount () {
+    FCM.requestPermissions()
+
+    FCM.getFCMToken().then(token => {
+      console.log('TOKEN (getFCMToken)', token)
+    })
+
+    FCM.getInitialNotification().then(notif => {
+      console.log('INITIAL NOTIFICATION', notif)
+    })
+
+    this.notificationListner = FCM.on(FCMEvent.Notification, notif => {
+      if (this.props.userInfo) {
+        getUnreadNotificationsAmount().then(amount => {
+          this.setState({notificationAmount: amount})
+        })
+      }
+    })
+
+    this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, token => {
+      console.log('TOKEN (refreshUnsubscribe)', token)
+    })
+  }
+
+  drawerOpen () {
     this.props.drawerNavigation.navigate('DrawerOpen')
   }
-  navigateToNotificationsScreen() {
+
+  navigateToNotificationsScreen () {
     this.props.drawerNavigation.navigate('MyNotificationsScreen')
   }
 
-  navigateToMainScreen(navigation, drawerNavigation) {
+  navigateToMainScreen = (navigation, drawerNavigation) => {
     if (drawerRouteNames[navigation.state.routeName]) {
       drawerNavigation.goBack()
     } else {
       const emptyStack = NavigationActions.reset({
         index: 0,
         actions: [
-          NavigationActions.navigate({ routeName: 'Home' })
-        ]
-      });
-      navigation.dispatch(emptyStack);
+          NavigationActions.navigate({routeName: 'Home'}),
+        ],
+      })
+      navigation.dispatch(emptyStack)
     }
   }
 
-  render() {
-    const { drawerNavigation, navigation, userInfo } = this.props;
+  render () {
+    const {drawerNavigation, navigation, userInfo} = this.props
 
-    drawerRouteNames[drawerNavigation.state.routeName] = true;
+    drawerRouteNames[drawerNavigation.state.routeName] = true
     // todo: удалить. заменить на Push Notifications
     // if (userInfo) {
     //   getUnreadNotificationsAmount().then(amount => {
@@ -101,20 +131,24 @@ class Header extends React.Component {
       <View style={styles.wrapper}>
         <SidebarBtn onPress={this.drawerOpen.bind(this)} />
         {
-          userInfo ? <UserName userName={userInfo.name} ln={this.props.ln} userImage={userInfo.img_path} onPress={() => {this.navigateToMainScreen(navigation, drawerNavigation)}} /> : null
+          userInfo ? <UserName
+            userName={userInfo.name} ln={this.props.ln} userImage={userInfo.img_path}
+            onPress={() => {this.navigateToMainScreen(navigation, drawerNavigation)}}
+          /> : null
         }
         {
           userInfo ? <Bell badgeValue={0} onPress={this.navigateToNotificationsScreen.bind(this)} /> : null
         }
         {
-          navigation.state.routeName === 'Home' ? null :
-          <BackBtn onPress={() => {
-            if (drawerRouteNames[navigation.state.routeName]) {
-              drawerNavigation.goBack()
-            } else {
-              navigation.goBack()
-            }
-          }} />
+          navigation.state.routeName === 'Home' ? null : <BackBtn
+            onPress={() => {
+              if (drawerRouteNames[navigation.state.routeName]) {
+                drawerNavigation.goBack()
+              } else {
+                navigation.goBack()
+              }
+            }}
+          />
         }
       </View>
     )
@@ -130,7 +164,7 @@ Header.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   userInfo: selectUserInfo(),
-  ln: selectLanguage()
+  ln: selectLanguage(),
 })
 
 const mapDispatchToProps = (dispatch) => {
