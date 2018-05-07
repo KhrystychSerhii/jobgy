@@ -25,6 +25,7 @@ import SubscriptionsScreen from '../Containers/Subscriptions/SubscriptionsScreen
 import PaymentScreen from '../Containers/Subscriptions/PaymentScreen'
 import SettingsScreen from '../Containers/Settings/SettingsScreen';
 import MyCategoriesScreen from '../Containers/MyCategories/MyCategoriesScreen';
+import CategoriesPaymentScreen from '../Containers/MyCategories/CategoriesPaymentScreen';
 import MyAdsScreen from '../Containers/MyAds/MyAdsScreen';
 import AdRatingScreen from '../Containers/MyAds/AdRatingScreen';
 import NotificationsSettingsScreen from '../Containers/NotificationsSettings/NotificationsSettingsScreen';
@@ -91,7 +92,8 @@ const SettingsNav = StackNavigator({
 })
 
 const MyCategoriesNav = StackNavigator({
-  MyCategories: {screen: MyCategoriesScreen}
+  MyCategories: {screen: MyCategoriesScreen},
+  Payment: {screen: CategoriesPaymentScreen}
 }, {
   ...stackOptions,
   initialRouteName: 'MyCategories',

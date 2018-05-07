@@ -6,8 +6,7 @@ import I18n from '../../I18n'
 // Styles
 import images from '../../Themes/Images'
 import Categories from '../../Components/Categories/Categories'
-import { selectCategories } from '../../Redux/SettingsRedux'
-import { getCategoriesList } from '../../Redux/CategoriesRedux'
+import { selectCategoriesList, getCategoriesList } from '../../Redux/CategoriesRedux'
 import { selectLanguage } from '../../Redux/I18nRedux';
 
 class FindJobScreen extends Component {
@@ -17,13 +16,15 @@ class FindJobScreen extends Component {
   };
 
   componentDidMount() {
-    getCategoriesList().then(categories => {
-      this.setState({categories});
-    });
+    this.props.getCategoriesList()
   }
 
   onSelectCategory = (category) => {
-    this.props.navigation.navigate('FindSubcategories', {categoryId: category.id, subCategories: category.subcategories})
+    if (category.subcategories && category.subcategories.length === 1) {
+      this.props.navigation.navigate('Results', {categoryId: category.id, subcategoryId: category.subcategories[0].id});
+    } else {
+      this.props.navigation.navigate('FindSubcategories', {categoryId: category.id, subCategories: category.subcategories})
+    }
   }
 
   onSelectDisabledCategory = (category) => {
@@ -34,7 +35,7 @@ class FindJobScreen extends Component {
     console.log('this.props.categories => ', this.props.categories);
     return (
       <Categories
-        categories={this.state.categories}
+        categories={this.props.categories}
         titleImage={images.findDude}
         title={I18n.t('translation.findAnAdd', {locale: this.props.ln})}
         isButtonActiveProperty={'is_available'}
@@ -46,12 +47,14 @@ class FindJobScreen extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  categories: selectCategories(),
+  categories: selectCategoriesList(),
   ln: selectLanguage()
 })
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    getCategoriesList: () => dispatch(getCategoriesList())
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FindJobScreen)

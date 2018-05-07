@@ -11,16 +11,27 @@ import { createStructuredSelector } from 'reselect'
 import styles from './style'
 
 import I18n from '../../I18n'
-import { selectCategories } from '../../Redux/SettingsRedux';
-import {selectLanguage} from "../../Redux/I18nRedux";
+import { selectLanguage } from '../../Redux/I18nRedux';
+
+import { selectCategoriesList, getCategoriesList, toggleCategory } from '../../Redux/CategoriesRedux'
 
 class NotificationsSettingsScreen extends React.Component {
   state = {}
 
+  componentDidMount() {
+    this._getCategoriesList();
+  }
+
   keyExtractor = (item, index) => index
 
+
+
+  ///
+  _getCategoriesList() {
+    this.props.getCategoriesList()
+  }
+
   render() {
-    console.log('this.props.categories', this.props.categories);
     return (
       <ScreenContainer>
         <PageTitle title={I18n.t('translation.notificationSettings', {locale: this.props.ln})} />
@@ -28,7 +39,7 @@ class NotificationsSettingsScreen extends React.Component {
           refreshing={true}
           numColumns={3}
           keyExtractor={this.keyExtractor}
-          data={this.props.categories}
+          data={this.props.categories ? this.props.categories.filter(item => { return typeof item.can_notify === 'number' }) : []}
           extraData={this.state}
           renderItem={({item}) =>
             <View
@@ -45,7 +56,10 @@ class NotificationsSettingsScreen extends React.Component {
                 <Switch
                   onTintColor={'#64d677'}
                   thumbTintColor={'#fff'}
-                  tintColor={'#cf4534'} />
+                  tintColor={'#cf4534'}
+                  onValueChange={() => { this.props.toggleCategory(item.id) }}
+                  value={!!item.can_notify}
+                />
               </View>
 
             </View>
@@ -59,12 +73,15 @@ class NotificationsSettingsScreen extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  categories: selectCategories(),
+  categories: selectCategoriesList(),
   ln: selectLanguage()
 })
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    getCategoriesList: () => dispatch(getCategoriesList()),
+    toggleCategory: (id) => dispatch(toggleCategory(id))
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotificationsSettingsScreen);
