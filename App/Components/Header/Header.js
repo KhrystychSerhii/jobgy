@@ -64,6 +64,28 @@ class Header extends React.Component {
   state = {
     notificationAmount: 0
   }
+
+  drawerOpen() {
+    this.props.drawerNavigation.navigate('DrawerOpen')
+  }
+  navigateToNotificationsScreen() {
+    this.props.drawerNavigation.navigate('MyNotificationsScreen')
+  }
+
+  navigateToMainScreen(navigation, drawerNavigation) {
+    if (drawerRouteNames[navigation.state.routeName]) {
+      drawerNavigation.goBack()
+    } else {
+      const emptyStack = NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'Home' })
+        ]
+      });
+      navigation.dispatch(emptyStack);
+    }
+  }
+
   render() {
     const { drawerNavigation, navigation, userInfo } = this.props;
 
@@ -74,28 +96,15 @@ class Header extends React.Component {
     //     this.setState({notificationAmount: amount})
     //   })
     // }
-    const navigateToMainScreen = (navigation, drawerNavigation) => {
-      if (drawerRouteNames[navigation.state.routeName]) {
-        drawerNavigation.goBack()
-      } else {
-        const emptyStack = NavigationActions.reset({
-          index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'Home' })
-          ]
-        });
-        navigation.dispatch(emptyStack);
-      }
 
-    }
     return (
       <View style={styles.wrapper}>
-        <SidebarBtn onPress={() => {drawerNavigation.navigate('DrawerOpen')}} />
+        <SidebarBtn onPress={this.drawerOpen.bind(this)} />
         {
-          userInfo ? <UserName userName={userInfo.name} ln={this.props.ln} userImage={userInfo.img_path} onPress={() => {navigateToMainScreen(navigation, drawerNavigation)}} /> : null
+          userInfo ? <UserName userName={userInfo.name} ln={this.props.ln} userImage={userInfo.img_path} onPress={() => {this.navigateToMainScreen(navigation, drawerNavigation)}} /> : null
         }
         {
-          userInfo ? <Bell badgeValue={0} onPress={() => {drawerNavigation.navigate('MyNotificationsScreen')}} /> : null
+          userInfo ? <Bell badgeValue={0} onPress={this.navigateToNotificationsScreen.bind(this)} /> : null
         }
         {
           navigation.state.routeName === 'Home' ? null :

@@ -14,17 +14,19 @@ import { createStructuredSelector } from 'reselect'
 import styles from './style'
 
 import I18n from '../../I18n'
-import { selectCategories } from '../../Redux/SettingsRedux';
+import { selectCategoriesList, getCategoriesList, unsubscribeCategoryById } from '../../Redux/CategoriesRedux';
 
 const Badge = ({children, onPress, top, left, right, backgroundColor = 'red', size = 18}) => {
   return (
-    <TouchableOpacity style={[
-      styles.badge,
-      {top},
-      (left || left === 0) ? {left} : null,
-      (right || right === 0) ? {right} : null,
-      {width: size, height: size},
-      {backgroundColor}
+    <TouchableOpacity
+      onPress={onPress}
+      style={[
+        styles.badge,
+        {top},
+        (left || left === 0) ? {left} : null,
+        (right || right === 0) ? {right} : null,
+        {width: size, height: size},
+        {backgroundColor}
       ]}>
         {children}
     </TouchableOpacity>
@@ -59,6 +61,8 @@ class MyCategoriesScreen extends React.Component {
   }
 
   componentDidMount() {
+    this.props.getCategoriesList();
+
     getSubscriptions().then(plans => {
       const subscriptionPlanId = this.props.userInfo.subscription_plan_id;
       const index = findIndex(plans, (item) => {
@@ -85,6 +89,12 @@ class MyCategoriesScreen extends React.Component {
 
   keyExtractor = (item, index) => index
 
+  goToPaymentScreen() {
+    console.log('this.state', this.state)
+    console.log('this.props', this.props)
+    this.props.navigation.navigate('Payment', {subscription: this.state.subscription})
+  }
+
   render() {
     console.log('my categories props', this.props)
     return (
@@ -95,7 +105,7 @@ class MyCategoriesScreen extends React.Component {
             numColumns={3}
             style={styles.listWrapper}
             keyExtractor={this.keyExtractor}
-            data={this.props.categories}
+            data={this.props.categories.filter(item => item.is_available)}
             extraData={this.state}
             renderItem={({item}) =>
               <View
@@ -115,6 +125,7 @@ class MyCategoriesScreen extends React.Component {
                     <Badge
                       top={0}
                       left={0}
+                      onPress={() => { this.props.unsubscribeCategoryById(item.id) }}
                     >
                       <Text style={styles.cancelBadgeText}>&times;</Text>
                     </Badge> : null
@@ -137,7 +148,7 @@ class MyCategoriesScreen extends React.Component {
           {
             this.state.subscription ?
               <View style={styles.fullWidth}>
-                <TouchableOpacity style={[styles.planButton, styles.button]}>
+                <TouchableOpacity onPress={this.goToPaymentScreen.bind(this)} style={[styles.planButton, styles.button]}>
                   <View style={{alignSelf: 'center', maxWidth: '65%'}}>
                     <Text>
                       {I18n.t(`translation.${this.state.subscription.title}`, {locale: this.props.ln})}
@@ -157,7 +168,7 @@ class MyCategoriesScreen extends React.Component {
                 </TouchableOpacity>
                 <Badge
                   top={10}
-                  left={10}
+                  right={10}
                   size={30}
                 >
                   <Text style={styles.tryBadgeText}>
@@ -173,13 +184,16 @@ class MyCategoriesScreen extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  categories: selectCategories(),
+  categories: selectCategoriesList(),
   userInfo: selectUserInfo(),
   ln: selectLanguage()
 })
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    getCategoriesList: () => dispatch(getCategoriesList()),
+    unsubscribeCategoryById: (id) => dispatch(unsubscribeCategoryById(id))
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyCategoriesScreen);

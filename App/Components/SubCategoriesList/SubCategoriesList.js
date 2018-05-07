@@ -24,13 +24,13 @@ class SubCategoriesList extends React.Component {
           renderItem={({item}) =>
 
             <GradientButton onPress={() => {this.props.onSelectCategory(item.id)}} style={[styles.buttonWrapper]}>
-              <View style={styles.imageContainer}>
-                <Image source={{uri: AppConfig.baseUrl + item.icon_path}} style={styles.image} />
-              </View>
               <View style={styles.textContainer}>
                 <Text style={styles.buttonTxt} numberOfLines={1} ellipsizeMode='tail'>
                   {item.title}
                 </Text>
+              </View>
+              <View style={styles.imageContainer}>
+                <Image source={{uri: AppConfig.baseUrl + item.icon_path}} style={styles.image} />
               </View>
             </GradientButton>
           }

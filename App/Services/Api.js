@@ -9,6 +9,7 @@ export const forgotPassword = (phone) => httpClient.post('/password/reset', phon
 
 export const fetchCategories = () => httpClient.get('/categories/all/public');
 export const fetchSubCategories = (id) => httpClient.get(`/categories/${id}`);
+export const unsubscribeCategory = (id) => httpClient.put('/subscriptions/category/unsubscribe', {category_id: id});
 export const fetchAttributes = (id) => httpClient.get(`/categories/${id}/attributes`);
 export const fetchPostsByCategory = (id, params) => httpClient.post(`/posts/all/public`, {category: id, ...params});
 export const fetchCategoryData = (id) => httpClient.post(`/posts/${id}`, {category: id});

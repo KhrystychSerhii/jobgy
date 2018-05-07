@@ -48,9 +48,6 @@ const NotificationItem = ({notification, removeNotification, ln}) => {
       >
         <Image resizeMode={'contain'} style={{width: 50, height: 30, marginLeft: 'auto'}} source={{uri: AppConfig.baseUrl + notification.icon_path}} />
       </View>
-
-
-
     </View>
   )
 };
