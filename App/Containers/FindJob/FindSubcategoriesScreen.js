@@ -19,21 +19,30 @@ import {getSubCategoriesList} from '../../Redux/SubCategoriesRedux';
 
 class FindSubcategoriesScreen extends React.Component {
 
+  state = {
+    category: null
+  }
+
   // todo: сделать по нормальному. узнать у Дена как по нормальному сделать
 
-  handleSelect = (id) => {
-    const categoryId = get(this.props.navigation, 'state.params.categoryId');
+  handleSelect = (subcategory) => {
+    const category = get(this.props.navigation, 'state.params.category');
 
-    this.props.getAttributesList(id);
-    this.props.navigation.navigate('Results', {categoryId: categoryId, subcategoryId: id});
+    this.props.getAttributesList(subcategory.id);
+    this.props.navigation.navigate('Results', {
+      category: category,
+      subcategory: subcategory
+    });
   };
 
   render () {
+    const {subCategories, category} = this.props.navigation.state.params;
     return (
       <SubCategories
-        subCategories={this.props.navigation.state.params.subCategories}
-        titleImage={images.postDude}
-        title={'בניין'}
+        subCategories={subCategories}
+        leftImage={category.icon_path}
+        titleImage={images.findDude}
+        title={category.title}
         onSelectCategory={this.handleSelect}
         titleImageStyles={styles.resultsTitleImage}
       />

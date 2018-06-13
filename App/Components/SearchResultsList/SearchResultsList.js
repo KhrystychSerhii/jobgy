@@ -8,13 +8,14 @@ import SearchResultItem from './SearchResultItem'
 class SearchResultsList extends React.Component {
   keyExtractor = (item, index) => index;
   render () {
-    const {results, onSelect, userInfo} = this.props
+    const {results, onSelect, userInfo, ln} = this.props;
+    console.log('results', results);
     return (
       <View>
         <FlatList
           keyExtractor={this.keyExtractor}
           data={results}
-          renderItem={({item}) => <SearchResultItem item={item} onSelect={onSelect} userInfo={userInfo} />}
+          renderItem={({item}) => <SearchResultItem item={item} onSelect={onSelect} userInfo={userInfo} ln={ln} />}
         />
       </View>
     )

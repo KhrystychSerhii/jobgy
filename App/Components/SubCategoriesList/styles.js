@@ -11,8 +11,9 @@ export default StyleSheet.create({
   },
   rowWrapper: {
     flex: 1,
-    justifyContent: 'space-between'
-  },
+    justifyContent: 'space-between',
+    flexDirection: 'row-reverse',
+},
   buttonWrapper: {
     width: itemWidth,
     height: 50,

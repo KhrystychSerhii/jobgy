@@ -15,19 +15,25 @@ import { fetchPostById } from '../../Services/Api'
 import { createStructuredSelector } from 'reselect'
 
 import { selectLanguage } from '../../Redux/I18nRedux'
+import { callButtonPress } from '../../Redux/CallsRedux';
+import { selectUserInfo } from '../../Redux/UserRedux';
+import { getAttributesList, selectAttributesList } from '../../Redux/AttributesRedux';
 
 class JobDetailsScreen extends Component {
   state = {
     post: null,
-  }
+    attributes: null
+  };
 
   componentDidMount () {
-    const postId = get(this.props.navigation, 'state.params.postId')
+    const postId = get(this.props.navigation, 'state.params.postId');
     if (postId) {
       fetchPostById(postId)
         .then((res) => {
-          this.setState({post: res.data.data})
-        })
+          this.setState({post: res.data.data});
+          const categoryId = get(this.state, 'post.category.id');
+          this.props.getAttributes(categoryId);
+        });
     }
   }
 
@@ -39,6 +45,10 @@ class JobDetailsScreen extends Component {
 
 
   render () {
+    const { callButtonPress, userInfo, attributes } = this.props;
+    const authorId = get(this.state, 'post.author.id');
+    const showCallButton = authorId !== userInfo.id; // get(this.props.navigation, 'state.params.showCallButton');
+
     return (
       <ScreenContainer>
         {
@@ -47,14 +57,17 @@ class JobDetailsScreen extends Component {
               position: 'relative',
               paddingHorizontal: 50
             }}>
-              <Image source={{uri: `${AppConfig.baseUrl}${this.state.post.category.icon_path}`}} style={{ width: 60, height: 60, position: 'absolute', right: 0, top: 20 }} resizeMode='contain' />
-              <PageTitle textStyle={{fontSize: 25}} title={this.state.post.author.business_name} />
-              <Image source={images.findDude} style={{ width: 60, height: 60, position: 'absolute', left: 0, top: 20 }} resizeMode='contain' />
+              {/*<Image source={} style={{ width: 60, height: 60, position: 'absolute', right: 0, top: 20 }} resizeMode='contain' />*/}
+              <PageTitle textStyle={{fontSize: 25}}
+                         leftImage={this.state.post.category.icon_path}
+                         rightImage={images.findDude}
+                         title={this.state.post.author.business_name} />
+              {/*<Image source={images.findDude} style={{ width: 60, height: 60, position: 'absolute', left: 0, top: 20 }} resizeMode='contain' />*/}
             </View> : null
         }
         {
           this.state.post ?
-            <JobDetails post={this.state.post} onShare={this.share.bind(this)} ln={this.props.ln} /> : null
+            <JobDetails post={this.state.post} onShare={this.share.bind(this)} ln={this.props.ln} showCallButton={showCallButton} callButtonPress={callButtonPress} attributes={attributes} /> : null
         }
       </ScreenContainer>
     )
@@ -62,11 +75,16 @@ class JobDetailsScreen extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  ln: selectLanguage()
-})
+  ln: selectLanguage(),
+  userInfo: selectUserInfo(),
+  attributes: selectAttributesList()
+});
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    callButtonPress: (postId) => dispatch(callButtonPress(postId)),
+    getAttributes: (categoryId) => dispatch(getAttributesList(categoryId))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(JobDetailsScreen)

@@ -8,22 +8,24 @@ export default StyleSheet.create({
   form: {flex: 1, width: '90%'},
   termsContainer: {
     position: 'relative',
-    marginBottom: 10,
-    paddingHorizontal: 25,
+    marginTop: 10,
+    marginBottom: 15,
     flex: 0,
-    justifyContent: 'space-between'
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    // alignSelf: 'center',
   },
   terms: {
     color: Colors.white,
-    textAlign: 'center',
-    ...Fonts.style.normal
+    ...Fonts.style.h4Bold
   },
   termsLink: {
     textDecorationStyle: 'solid',
     color: Colors.white,
     textDecorationColor: Colors.white,
     textDecorationLine: 'underline',
-    ...Fonts.style.normal
+    ...Fonts.style.h4Bold
 
   },
   subscriptionItem: {

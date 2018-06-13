@@ -82,7 +82,6 @@ const ApplicationStyles = {
     textAlign: 'center',
   },
   titleWithImagesWrapper: {
-    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
     position: 'relative',
   },
   dropdownBarLeft: {

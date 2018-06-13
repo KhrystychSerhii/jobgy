@@ -21,22 +21,27 @@ class PostSubcategoriesScreen extends React.Component {
 
   // todo: сделать по нормальному. узнать у Дена как по нормальному сделать
 
-  handleSelect = (id) => {
-    const categoryId = get(this.props.navigation, 'state.params.categoryId');
-    this.props.getAttributesList(id);
+  handleSelect = (subcategory) => {
+    const category = get(this.props.navigation, 'state.params.category');
+    this.props.getAttributesList(subcategory.id).then(() => {
+      this.props.navigation.navigate('JobForm', {
+        category: category,
+        subcategory: subcategory
+      });
+    });
 
-    this.props.navigation.navigate(
-      'JobForm',
-      {categoryId: categoryId, subcategoryId: id},
-    )
+
   };
 
   render () {
+    const category = get(this.props.navigation, 'state.params.category');
+    console.log('this.props.navigation.state.params ==> ', this.props.navigation.state.params)
     return (
       <SubCategories
         subCategories={this.props.navigation.state.params.subcategories}
         titleImage={images.postDude}
-        title={'בניין'}
+        leftImage={category.icon_path}
+        title={category.title}
         onSelectCategory={this.handleSelect}
         titleImageStyles={styles.resultsTitleImage}
       />

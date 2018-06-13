@@ -8,8 +8,10 @@ const type = {
 }
 
 const size = {
-  h1: scale(40),
+  h1: 40,
+  // h1: scale(40),
   h2: scale(26),
+  h23: scale(21),
   h3: scale(16), // 30px
   h4: scale(14),
   h5: scale(12),
@@ -69,6 +71,61 @@ const style = {
   },
   medium: {
     fontFamily: type.base,
+    fontSize: size.medium,
+    includeFontPadding: false,
+  },
+  h1Bold: {
+    fontFamily: type.bold,
+    fontSize: size.h1,
+    includeFontPadding: false,
+  },
+  h2Bold: {
+    fontFamily: type.bold,
+    fontSize: size.h2,
+    includeFontPadding: false,
+  },
+  h23Bold: {
+    fontFamily: type.bold,
+    fontSize: size.h23,
+    includeFontPadding: false,
+  },
+  h3Bold: {
+    fontFamily: type.bold,
+    fontSize: size.h3,
+    includeFontPadding: false,
+  },
+  h4Bold: {
+    fontFamily: type.bold,
+    fontSize: size.h4,
+    includeFontPadding: false,
+  },
+  h5Bold: {
+    fontFamily: type.bold,
+    fontSize: size.h5,
+    includeFontPadding: false,
+  },
+  h6Bold: {
+    fontFamily: type.bold,
+    fontSize: size.h6,
+    includeFontPadding: false,
+  },
+  normalBold: {
+    fontFamily: type.bold,
+    fontSize: size.regular,
+    includeFontPadding: false,
+  },
+  descriptionBold: {
+    fontFamily: type.bold,
+    fontSize: size.medium,
+    includeFontPadding: false,
+  },
+  inputBold: {
+    fontFamily: type.bold,
+    fontSize: size.input,
+    includeFontPadding: false,
+  },
+  mediumBold: {
+    fontFamily: type.bold,
     fontSize: size.medium,
     includeFontPadding: false,
   },

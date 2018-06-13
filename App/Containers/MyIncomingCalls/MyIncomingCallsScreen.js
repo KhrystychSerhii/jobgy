@@ -8,50 +8,61 @@ import Images from '../../Themes/Images';
 import FormInput from '../../Components/FormInput'
 import ScreenContainer from '../../Components/ScreenContainer/ScreenContainer';
 import PageTitle from '../../Components/PageTitle/PageTitle';
-import { getIncomingCallsList } from '../../Redux/CallsRedux';
+import InputField from '../../Components/InputField';
+
+
 
 import { createStructuredSelector } from 'reselect'
 
 import styles from './style'
 
 import I18n from '../../I18n'
-import {selectLanguage} from "../../Redux/I18nRedux";
+
+import { getIncomingCallsList, searchIncomingCallsList, selectIncomingCallsList } from '../../Redux/CallsRedux';
+import {selectLanguage} from '../../Redux/I18nRedux';
+
+const IconItem = ({rating, premium}) => {
+  return (
+    <View style={styles.iconWrapper}>
+      {
+        rating ? <Text style={styles.businessNameText}>{rating}</Text> : null
+      }
+      {
+        premium ? <Image source={Images.premiumIcon} style={styles.icon} resizeMode={'contain'} /> : <Image source={Images.starIcon} style={styles.icon} resizeMode={'contain'} />
+      }
+    </View>
+  )
+};
 
 const IncomingCallItem = ({item, ln}) => {
   return (
     <View style={styles.incomingCallWrapper}>
       <View
-        style={styles.numberWrapper}
+        style={styles.infoWrapper}
       >
-        <Text>
+        <Text style={styles.infoText}>
           {`${I18n.t('translation.adNumber', {locale: ln})} ${item.post_id}`}
         </Text>
-        <Text>
+        <Text style={styles.infoText}>
           {`${I18n.t('translation.publicationDate', {locale: ln})} ${item.publication_date}`}
         </Text>
-        <Text>
+        <Text style={styles.infoText}>
           {`${I18n.t('translation.subCategory', {locale: ln})} ${item.category.title}`}
         </Text>
       </View>
       <View
-        style={styles.infoWrapper}
+        style={styles.numberWrapper}
       >
-        <Text>
-          {
-            item.business_rating ?
-              item.business_rating :
-              null
-          }
-          {
-            item.is_premium ?
-              <Image source={Images.premiumIcon} /> :
-              <Image source={Images.starIcon} />
-          }
-          {item.business_name}
-        </Text>
-        <Text>
-          {item.business_phone}
-        </Text>
+        <View style={styles.businessNameWrapper}>
+          <IconItem rating={item.business_rating} premium={item.is_premium} />
+          <Text style={styles.businessNameText}>{item.business_name}</Text>
+        </View>
+        <View>
+          <Text style={styles.businessPhoneText}>
+            {item.business_phone}
+          </Text>
+        </View>
+
       </View>
     </View>
   );
@@ -59,43 +70,51 @@ const IncomingCallItem = ({item, ln}) => {
 
 class MyIncomingCallsScreen extends React.Component {
   state = {
-    calls: [],
     spinner: true,
     searchBy: ''
   }
 
   componentDidMount() {
-    this._getCallsList = this._getCallsList.bind(this);
     this._getCallsList();
   }
 
-  onSearchByChanged(name, value) {
+  onSearchByChanged = (name, value) => {
     this.setState({[name]: value});
+    this.setState({spinner: true});
+
+    if (value || value === 0) {
+      this.props.searchIncomingCalls(value).then(() => {
+        this.setState({spinner: false});
+      });
+    } else {
+      this._getCallsList();
+    }
+
+
   }
 
   keyExtractor = (item, index) => index;
 
   ///
-  _getCallsList() {
+  _getCallsList = () => {
     this.setState({spinner: true});
-    getIncomingCallsList().then((calls) => {
-      console.log('calls', calls);
+    this.props.getIncomingCallsList().then(() => {
       this.setState({spinner: false});
-      this.setState({calls});
-    })
+    });
   }
 
   render() {
+    const {ln, calls} = this.props;
     return (
       <ScreenContainer noPadding={true}>
-        <PageTitle title={I18n.t('translation.myIncomingCalls', {locale: this.props.ln})} />
-        <View style={{flex: 0, width: '100%', paddingHorizontal: '10%'}}>
-          <FormInput
-            name={'searchBy'}
-            keyboardType={'phone-pad'}
-            onChange={this.onSearchByChanged.bind(this)}
-            label={I18n.t('translation.search', {locale: this.props.ln})}
+        <PageTitle title={I18n.t('translation.myIncomingCalls', {locale: ln})} />
+        <View style={{flex: 0, width: '100%', paddingHorizontal: '10%', marginVertical: 20}}>
+
+          <InputField
+            onChangeText={(value) => { this.onSearchByChanged('searchBy', value); }}
             value={this.state.searchBy}
+            placeholder={I18n.t('translation.search', {locale: ln})}
+            keyboardType={'phone-pad'}
           />
         </View>
         {
@@ -105,10 +124,10 @@ class MyIncomingCallsScreen extends React.Component {
               numColumns={1}
               style={{width: '100%'}}
               keyExtractor={this.keyExtractor}
-              data={this.state.calls.filter(item => item.business_phone ? (item.business_phone.indexOf(this.state.searchBy) === 0) : false)}
+              data={calls}
               extraData={this.state}
               renderItem={({item}) =>
-                <IncomingCallItem item={item} ln={this.props.ln} />
+                <IncomingCallItem item={item} ln={ln} />
               }
             />
         }
@@ -118,11 +137,15 @@ class MyIncomingCallsScreen extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  ln: selectLanguage()
+  ln: selectLanguage(),
+  calls: selectIncomingCallsList()
 })
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    getIncomingCallsList: () => dispatch(getIncomingCallsList()),
+    searchIncomingCalls: (phone) => dispatch(searchIncomingCallsList(phone))
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyIncomingCallsScreen);

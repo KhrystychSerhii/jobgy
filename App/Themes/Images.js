@@ -27,6 +27,7 @@ const images = {
   dude1: require('../Images/dude1.png'),
   dude2: require('../Images/dude2.png'),
   dude3: require('../Images/dude3.png'),
+  dude4: require('../Images/dude4.png'),
   findDude: require('../Images/search-image-small.png'),
   postDude: require('../Images/post-image-small.png'),
   category1: require('../Images/category1.png'),
@@ -56,7 +57,10 @@ const images = {
   bellIcon: require('../Images/bell-icon.png'),
   premiumIcon: require('../Images/premium.png'),
   starIcon: require('../Images/star.png'),
-  camera: require('../Images/camera.png')
+  camera: require('../Images/camera.png'),
+  premiumCategoryIcon: require('../Images/premium-category-icon.png'),
+  successCheckIcon: require('../Images/success-check.png'),
+  arrowDropdown: require('../Images/arrow-down.png')
 }
 
 export default images

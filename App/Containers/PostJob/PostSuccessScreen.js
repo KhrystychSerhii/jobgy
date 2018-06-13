@@ -41,7 +41,7 @@ class PostJobScreen extends Component {
         </View>
         <View>
           <FormButton
-            onPress={() => this.goToScreen('Details', {postId: successPostData.id})}
+            onPress={() => this.goToScreen('Details', {postId: successPostData.id, showCallButton: true})}
             style={styles.outlineBtn}
           >{I18n.t('POST_JOB.SHOW_AD')}</FormButton>
           <FormButton

@@ -11,7 +11,7 @@ import { NavigationActions } from 'react-navigation'
 
 import { selectUserInfo } from '../../Redux/UserRedux'
 import { selectLanguage } from '../../Redux/I18nRedux'
-import { getUnreadNotificationsAmount } from '../../Redux/NotificationRedux'
+import { getUnreadNotificationsAmount, selectUnreadNotificationsAmount } from '../../Redux/NotificationRedux'
 
 import { Images } from '../../Themes'
 import styles from './styles'
@@ -51,13 +51,13 @@ export const Bell = ({badgeValue = 0, onPress}) => {
 export const UserName = ({userName, userImage, onPress, ln}) => {
   return (
     <TouchableOpacity onPress={onPress} style={[styles.userInfo]}>
-      <View style={{alignSelf: 'center', flex: 0, flexDirection: 'row', flexWrap: 'nowrap'}}>
-        {
-          userImage ? <Image style={styles.userImage} source={{uri: AppConfig.baseUrl + userImage}} /> : null
-        }
+      <View style={{alignSelf: 'center', flex: 0, flexDirection: 'row', flexWrap: 'nowrap', height: 50, position: 'relative'}}>
         <Text style={styles.userName} numberOfLines={1} ellipsizeMode='tail'>
           {I18n.t('translation.headerGreeting', {locale: ln, userName: userName})}
         </Text>
+        {
+          !!userImage ? <Image style={styles.userImage} resizeMode={'cover'} source={{uri: AppConfig.baseUrl + userImage}} /> : null
+        }
       </View>
     </TouchableOpacity>
   )
@@ -66,32 +66,16 @@ export const UserName = ({userName, userImage, onPress, ln}) => {
 let drawerRouteNames = {}
 
 class Header extends React.Component {
-  state = {
-    notificationAmount: 0,
-  }
 
   componentDidMount () {
-    FCM.requestPermissions()
-
-    FCM.getFCMToken().then(token => {
-      console.log('TOKEN (getFCMToken)', token)
-    })
-
-    FCM.getInitialNotification().then(notif => {
-      console.log('INITIAL NOTIFICATION', notif)
-    })
+    if (this.props.userInfo) {
+      this.props.getUnreadNotificationsAmount();
+    }
 
     this.notificationListner = FCM.on(FCMEvent.Notification, notif => {
-      if (this.props.userInfo) {
-        getUnreadNotificationsAmount().then(amount => {
-          this.setState({notificationAmount: amount})
-        })
-      }
-    })
+      this.props.getUnreadNotificationsAmount();
+    });
 
-    this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, token => {
-      console.log('TOKEN (refreshUnsubscribe)', token)
-    })
   }
 
   drawerOpen () {
@@ -137,7 +121,7 @@ class Header extends React.Component {
           /> : null
         }
         {
-          userInfo ? <Bell badgeValue={0} onPress={this.navigateToNotificationsScreen.bind(this)} /> : null
+          userInfo ? <Bell badgeValue={this.props.notificationsAmount} onPress={this.navigateToNotificationsScreen.bind(this)} /> : null
         }
         {
           navigation.state.routeName === 'Home' ? null : <BackBtn
@@ -165,10 +149,13 @@ Header.propTypes = {
 const mapStateToProps = createStructuredSelector({
   userInfo: selectUserInfo(),
   ln: selectLanguage(),
+  notificationsAmount: selectUnreadNotificationsAmount()
 })
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    getUnreadNotificationsAmount: () => dispatch(getUnreadNotificationsAmount()),
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

@@ -1,5 +1,5 @@
 import { StyleSheet, I18nManager } from 'react-native'
-import { Colors } from '../../Themes'
+import { Colors, Fonts } from '../../Themes'
 
 export default StyleSheet.create({
   textButton: {
@@ -8,7 +8,7 @@ export default StyleSheet.create({
     flexWrap: 'nowrap',
     alignItems: 'center',
     alignSelf: 'center',
-    maxWidth: '50%'
+    // maxWidth: '50%'
   },
   icon: {
     width: 25,
@@ -19,6 +19,7 @@ export default StyleSheet.create({
   text: {
     color: Colors.white,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.white
+    borderBottomColor: Colors.white,
+    ...Fonts.style.h5Bold
   }
 })

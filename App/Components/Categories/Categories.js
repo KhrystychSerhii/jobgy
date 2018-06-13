@@ -8,15 +8,20 @@ import styles from './styles'
 
 class Categories extends React.Component {
   render () {
-    const {categories, titleImage, title, onSelectCategory, titleImageStyles, isButtonActiveProperty, onSelectDisabledCategory} = this.props;
+    const {categories, titleImage, leftImage, title, onSelectCategory, titleImageStyles, isButtonActiveProperty, onSelectDisabledCategory, ln, spinner} = this.props;
     return (
       <ScreenContainer>
-        <View style={styles.titleWithImagesWrapper}>
-          <PageTitle title={title} />
-          <Image source={titleImage} style={[styles.titleImage, titleImageStyles]} resizeMode='contain' />
+        <View style={[styles.titleWithImagesWrapper]}>
+          <PageTitle title={title} rightImage={titleImage} leftImage={leftImage} />
         </View>
         {/* todo: если одна категория в списке подкатерий, сразу напрвлять на нее */}
-        <CategoriesList categories={categories} onSelectCategory={onSelectCategory} onSelectDisabledCategory={onSelectDisabledCategory} isButtonActiveProperty={isButtonActiveProperty} />
+        <CategoriesList
+          spinner={spinner}
+          ln={ln}
+          categories={categories}
+          onSelectCategory={onSelectCategory}
+          onSelectDisabledCategory={onSelectDisabledCategory}
+          isButtonActiveProperty={isButtonActiveProperty} />
       </ScreenContainer>
     )
   }

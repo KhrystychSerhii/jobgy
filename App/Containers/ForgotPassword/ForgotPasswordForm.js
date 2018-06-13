@@ -9,6 +9,7 @@ import I18n from '../../I18n'
 import styles from './styles'
 import FormButton from '../../Components/FormButton'
 import TextButton from '../../Components/TextButton';
+import { FormTextInput } from '../../Components/FormTextInput';
 
 const validationSchema = Yup.object().shape({
   phone: Yup.string()
@@ -37,24 +38,28 @@ class ForgotPasswordForm extends React.Component {
               handleSubmit,
               isSubmitting,
               setFieldValue,
+              isValid
             }) => {
               return (
                 <View>
-                  <FormInput
-                    invalid={!!errors.phone && touched.phone}
-                    onChange={setFieldValue}
-                    name='phone'
+                  <FormTextInput
+                    valid={!errors.phone && touched.phone}
+                    onChange={(value) => { setFieldValue('phone', value);}}
+                    placeholder={I18n.t('translation.phoneNumber', {locale: this.props.ln})}
                     value={values.phone}
                     keyboardType={'phone-pad'}
-                    label={I18n.t('translation.phoneNumber')}
+                    required={true}
                   />
+
                   <FormButton
-                    disabled={isSubmitting} onPress={handleSubmit}
-                  >{I18n.t('translation.getNewPassViewSMS')}</FormButton>
-                  <View style={{flex: 0, flexDirection: 'row', justifyContent: 'space-between', marginTop: 20}}>
+                    disabled={!isValid}
+                    onPress={handleSubmit}
+                  >{I18n.t('translation.getNewPassViaSMS', {locale: this.props.ln})}</FormButton>
+
+                  <View style={{flex: 0, flexDirection: 'row', justifyContent: 'flex-end', marginTop: 20}}>
                     <TextButton
                       onPress={this.props.onBackPress}
-                      text={I18n.t('translation.backToLogin')}
+                      text={I18n.t('translation.backToLogin', {locale: this.props.ln})}
                     />
                   </View>
                 </View>

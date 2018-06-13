@@ -61,8 +61,6 @@ class Dropdown extends Component {
   handleCheck = (value) => {
 
     let selectedItems = this.state.selectedItems;
-    console.log('value ==> ', value);
-    console.log('selectedItems ==> ', selectedItems);
 
     if (selectedItems[value]) {
       delete selectedItems[value];
@@ -147,7 +145,7 @@ class Dropdown extends Component {
             style={styles.contentWrapper}>
             <FlatList
               keyExtractor={this.keyExtractor}
-              data={this.state.searchBy && textField ? values.filter(item => (item[textField] && item[textField].toLowerCase()) ? (item[textField].toLowerCase().indexOf(this.state.searchBy) === 0) : false) : values}
+              data={this.state.searchBy && textField ? values.filter(item => (item[textField] && item[textField].toLowerCase()) ? (item[textField].toLowerCase().indexOf(this.state.searchBy) >= 0) : false) : values}
               renderItem={
                 ({item, index}) => {
                   const text = textField ? item[textField] : item

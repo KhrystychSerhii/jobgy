@@ -46,7 +46,7 @@ class FormSelectDropdown extends React.Component {
   }
 
   render () {
-    const {label, labelProps, invalid, values, multiple, selectedItems, whiteBlockStyles, selectedText, valueField, textField, ln} = this.props
+    const {label, labelProps, invalid, values, multiple, selectedItems, whiteBlockStyles, selectedText, valueField, textField, disabled, ln} = this.props
     const isValid = !!selectedText;
     const {offsetY, width, offsetX} = this.state
     if (multiple && !isArray(selectedItems)) {
@@ -62,13 +62,13 @@ class FormSelectDropdown extends React.Component {
     return (
       <View
         ref={(e) => { this.view = e }}
-        style={[{position: 'relative', flex: 1, marginBottom: 10}]}
+        style={[{position: 'relative', flex: 1, marginBottom: 10}, disabled ? {opacity: .5} : null]}
         onLayout={event => {
           this.getMeasurements()
         }}
       >
         <FormBaseItem
-          whiteBlockStyles={_whiteBlockStyles} label={label} labelProps={labelProps} onFocus={this.handleFocus}
+          whiteBlockStyles={_whiteBlockStyles} label={label} labelProps={labelProps} onFocus={this.handleFocus} disabled={disabled}
         >
           <Row width={'48%'} styles={{flex: 1, flexDirection: 'row-reverse', paddingRight: 15, paddingLeft: 5}} justifyContent={'flex-start'}>
             {!!selectedText && <Text style={[styles.value, {textAlign: 'left', paddingBottom: 4}]} numberOfLines={1} ellipsizeMode='tail'>{selectedText}</Text>}
@@ -108,6 +108,7 @@ FormSelectDropdown.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   ln: PropTypes.any,
+  disabled: PropTypes.bool,
 }
 
 export default FormSelectDropdown

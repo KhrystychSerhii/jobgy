@@ -13,10 +13,12 @@ export const getCurrentLanguage = () => async (dispatch) => {
 }
 
 export const updateCurrentLanguage = (ln) => async (dispatch) => {
+  console.log('ln', ln);
   const language = await setLanguage(ln);
+  console.log('language response', language);
   I18n.locale = ln;
   dispatch(getCurrentLanguage())
-}
+};
 export const INITIAL_STATE = Immutable({
   ln: 'en',
 });

@@ -13,6 +13,7 @@ export default StyleSheet.create({
   },
   button: {
     width: '40%',
+    height: 40,
     padding: 10,
     borderRadius: 8,
     alignItems: 'center',
@@ -29,17 +30,43 @@ export default StyleSheet.create({
     borderWidth: 2,
   },
   buttonText: {
-    ...Fonts.style.h4,
+    ...Fonts.style.h5,
     fontWeight: '600',
     color: Colors.white,
     textAlign: 'center'
   },
-
+  // active add item
   adItemWrapper: {
     width: '100%',
     backgroundColor: Colors.white,
     marginBottom: 10
   },
+  adItemInner: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    flex: 0,
+    justifyContent: 'space-between'
+  },
+  adItemContentContainer_66: {
+    width: '66%',
+    flex: 0,
+  },
+  adItemContentContainer_50: {
+    width: '50%',
+    flex: 0,
+  },
+  adItemContentContainer_33: {
+    width: '33%',
+    flex: 0,
+  },
+
+
+
+
+
+
+
+
   adItemContent: {
 
     padding: 10,
@@ -105,11 +132,11 @@ export default StyleSheet.create({
   ratingFieldStarsWrapper: {
     flex: 0,
     flexDirection: 'row',
-    marginBottom: 20
+    marginBottom: 20,
   },
   ratingFieldStar: {
-    width: 50,
-    height: 50,
+    width: 35,
+    height: 35,
     marginHorizontal: 5,
     opacity: .2
   },

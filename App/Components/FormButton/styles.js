@@ -3,6 +3,7 @@ import { Colors, Fonts } from '../../Themes'
 
 export default StyleSheet.create({
   btn: {
+    height: 60,
     // marginBottom: 20,
     paddingHorizontal: 10,
     paddingVertical: 20,
@@ -13,7 +14,7 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   txt: {
-    ...Fonts.style.normal,
+    ...Fonts.style.h4,
     color: Colors.white,
     fontWeight: '500',
     includeFontPadding: false

@@ -1,5 +1,6 @@
 import httpClient from '../Services/Http'
 import * as Api from '../Services/Api'
+import FCM, { FCMEvent } from 'react-native-fcm'
 import { getCurrentUser } from './UserRedux'
 
 export const LOGOUT_CURRENT = 'jobjy/auth/LOGOUT_CURRENT'

@@ -22,6 +22,7 @@ import FindSubcategoriesScreen from '../Containers/FindJob/FindSubcategoriesScre
 import JobFormScreen from '../Containers/PostJob/JobFormScreen'
 import PostSuccessScreen from '../Containers/PostJob/PostSuccessScreen'
 import SubscriptionsScreen from '../Containers/Subscriptions/SubscriptionsScreen'
+import ChooseCategoriesScreen from '../Containers/Subscriptions/ChooseCategoriesScreen'
 import PaymentScreen from '../Containers/Subscriptions/PaymentScreen'
 import SettingsScreen from '../Containers/Settings/SettingsScreen';
 import MyCategoriesScreen from '../Containers/MyCategories/MyCategoriesScreen';
@@ -31,6 +32,12 @@ import AdRatingScreen from '../Containers/MyAds/AdRatingScreen';
 import NotificationsSettingsScreen from '../Containers/NotificationsSettings/NotificationsSettingsScreen';
 import MyIncomingCallsScreen from '../Containers/MyIncomingCalls/MyIncomingCallsScreen';
 import MyNotificationsScreen from '../Containers/MyNotifications/MyNotificationsScreen';
+import WrappedFindCategories from '../Containers/FindJob/WrappedFindCategories';
+import WrappedPostCategories from '../Containers/PostJob/WrappedPostCategories';
+import AllBusinessCategoriesScreen from '../Containers/AllBusiness/AllBusinessCategoriesScreen';
+import BusinessResults from '../Containers/AllBusiness/BusinessResults';
+import PremiumBusinessResults from '../Containers/AllBusiness/PremiumBusinessResults';
+import WrappedBusinessCategories from '../Containers/AllBusiness/WrappedBusinessCategories';
 
 const stackOptions = {
   navigationOptions: ({screenProps: {drawerNavigation}, navigation}) => {
@@ -48,8 +55,14 @@ const HomeNav = StackNavigator({
   Post: {screen: PostJobScreen},
   PostSubcategories: {screen: PostSubcategoriesScreen},
   FindSubcategories: {screen: FindSubcategoriesScreen},
+  WrappedFindCategories: {screen: WrappedFindCategories},
+  WrappedPostCategories: {screen: WrappedPostCategories},
   JobForm: {screen: JobFormScreen},
   PostSuccess: {screen: PostSuccessScreen},
+  AllBusinessCategories: {screen: AllBusinessCategoriesScreen},
+  BusinessResults: {screen: BusinessResults},
+  PremiumBusinessResults: {screen: PremiumBusinessResults},
+  WrappedBusinessCategories: {screen: WrappedBusinessCategories},
 }, {
   ...stackOptions,
   initialRouteName: 'Home',
@@ -68,16 +81,23 @@ const LoginNav = StackNavigator({
   Login: {
     screen: ({screenProps, navigation}) => <LoginScreen screenProps={{rootNavigation: screenProps.drawerNavigation, navigation}} />,
   },
-  ForgotPassword: {
-    screen: ({screenProps, navigation}) => <ForgotPasswordScreen screenProps={{rootNavigation: screenProps.drawerNavigation, navigation}} />
-  },
 }, {
   ...stackOptions,
   initialRouteName: 'Login',
 })
 
+const ForgotPasswordNav = StackNavigator({
+  ForgotPassword: {
+    screen: ({screenProps, navigation}) => <ForgotPasswordScreen screenProps={{rootNavigation: screenProps.drawerNavigation, navigation}} />
+  }
+}, {
+  ...stackOptions,
+  initialRouteName: 'ForgotPassword',
+});
+
 const SubscriptionsNav = StackNavigator({
   Subscriptions: {screen: SubscriptionsScreen},
+  ChooseCategories: {screen: ChooseCategoriesScreen},
   Payment: {screen: PaymentScreen},
 }, {
   ...stackOptions,
@@ -93,7 +113,7 @@ const SettingsNav = StackNavigator({
 
 const MyCategoriesNav = StackNavigator({
   MyCategories: {screen: MyCategoriesScreen},
-  Payment: {screen: CategoriesPaymentScreen}
+  Payment: {screen: PaymentScreen}
 }, {
   ...stackOptions,
   initialRouteName: 'MyCategories',
@@ -123,6 +143,8 @@ const MyIncomingCallsScreenNav = StackNavigator({
 })
 
 const MyNotificationsScreenNav = StackNavigator({
+  Details: {screen: JobDetailsScreen},
+  Rating: {screen: AdRatingScreen},
   MyNotificationsScreen: {screen: MyNotificationsScreen}
 }, {
   ...stackOptions,
@@ -160,7 +182,10 @@ const DrawerNav = DrawerNavigator({
   },
   MyNotificationsScreen: {
     screen: ({navigation}) => <MyNotificationsScreenNav screenProps={{drawerNavigation: navigation}} />
-  }
+  },
+  ForgotPassword: {
+    screen: ({navigation}) => <ForgotPasswordNav screenProps={{drawerNavigation: navigation}} />
+  },
 }, {
   initialRouteName: 'Home',
   contentComponent: Sidebar,

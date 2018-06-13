@@ -33,4 +33,4 @@ export function getFormattedDate (date) {
 
 export const isRtl = () => I18nManager.isRTL
 export const rightProp = () => isRtl() ? 'right' : 'left';
-export const leftProp = () => isRtl() ? 'left' : 'right'
+export const leftProp = () => isRtl() ? 'left' : 'right';

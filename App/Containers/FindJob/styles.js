@@ -1,13 +1,17 @@
-import { StyleSheet, I18nManager } from 'react-native'
+import { StyleSheet, I18nManager, Dimensions } from 'react-native'
 import { Fonts, Colors, ApplicationStyles } from '../../Themes/index'
 import { scale } from 'react-native-size-matters'
 import { leftProp, rightProp } from '../../Transforms/index'
 
+const {width, height} = Dimensions.get('window');
+
+const imageWidth = width - 90;
+
 export default StyleSheet.create({
   titleWithImagesWrapper: {
     ...ApplicationStyles.titleWithImagesWrapper,
-    paddingLeft: 50,
-    paddingRight: 50,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   resultsTitleImage: {
     position: 'absolute',
@@ -78,21 +82,28 @@ export default StyleSheet.create({
     fontWeight: '500',
   },
   jobDetailsCallBtn: {
-    backgroundColor: Colors.white,
-    width: 180,
-    marginTop: 40,
-    marginBottom: 15,
+    backgroundColor: Colors.transparent,
+    width: '90%',
+    marginVertical: 15,
     elevation: 5,
   },
   jobDetailsCallBtnText: {
-    color: Colors.black,
+    color: Colors.white,
   },
   jobDetailsShareButton: {
     ...ApplicationStyles.outlineButton,
-    width: 180,
-    marginBottom: 40,
+    width: '90%',
+    marginVertical: 15,
+    borderColor: Colors.white,
+    borderWidth: 2
   },
   jobDetailsShareButtonText: {
+    color: Colors.white,
     borderColor: Colors.white,
+  },
+  jobDetailsImage: {
+    width: imageWidth,
+    height: imageWidth
   }
+
 })

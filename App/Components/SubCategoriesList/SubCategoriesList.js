@@ -23,7 +23,7 @@ class SubCategoriesList extends React.Component {
           data={this.props.list}
           renderItem={({item}) =>
 
-            <GradientButton onPress={() => {this.props.onSelectCategory(item.id)}} style={[styles.buttonWrapper]}>
+            <GradientButton onPress={() => {this.props.onSelectCategory(item)}} style={[styles.buttonWrapper]}>
               <View style={styles.textContainer}>
                 <Text style={styles.buttonTxt} numberOfLines={1} ellipsizeMode='tail'>
                   {item.title}

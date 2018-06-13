@@ -4,6 +4,8 @@ import { createSelector } from 'reselect'
 import { combineReducers } from 'redux'
 import { fetchCategories, toggleNotificationCategory, unsubscribeCategory } from '../Services/Api'
 
+import lodash from 'lodash';
+
 export const GET_CATEGORIES_LIST_SUCCESS = 'jobjy/categories/GET_CATEGORIES_LIST_SUCCESS'
 
 /* ------------- Types and Action Creators ------------- */
@@ -21,14 +23,13 @@ export const toggleCategory = (categoryId) => async (dispatch) => {
   }
 }
 export const unsubscribeCategoryById = (categoryId) => async (dispatch) => {
-  console.log('categoryId => ', categoryId);
   const response = await unsubscribeCategory(categoryId);
   if (response.ok) {
     dispatch(getCategoriesList());
   }
 }
 export const INITIAL_STATE = Immutable({
-  list: []
+  list: [],
 })
 /* ------------- Selectors ------------- */
 

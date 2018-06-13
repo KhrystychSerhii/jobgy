@@ -13,21 +13,53 @@ const InfoItem = ({label, value, size}) => (
   </View>
 )
 
-const SearchResultItem = ({item, onSelect, userInfo}) => (
-  <TouchableWithoutFeedback onPress={() => userInfo ? onSelect(item.id) : null}>
+const SearchResultItem = ({item, onSelect, userInfo, ln}) => (
+  <TouchableWithoutFeedback onPress={() => onSelect(item.id)}>
     <View style={styles.itemWrapper}>
       <View style={styles.infoWrapper}>
-        <InfoItem label={I18n.t('translation.domain')} value={item.category} size='lg' />
-        <InfoItem label={I18n.t('translation.typeOfServce')} value={item.serviceType} size='sm' />
-        <InfoItem label={I18n.t('translation.area')} value={item.area} size='lg' />
-        <InfoItem label={I18n.t('translation.workPeriod')} value={item.date} size='sm' />
+        <View style={[styles.infoRow, {paddingBottom: 10}]}>
+
+          <View style={[styles.valueWrapper, {width: '60%'}]}>
+            <Text style={styles.label}>
+              {I18n.t('translation.typeOfServce', {locale: ln})}
+            </Text>
+            <Text style={styles.info}>
+              {item.serviceType}
+            </Text>
+          </View>
+
+          <View style={[styles.valueWrapper, {width: '40%'}]}>
+            <Text style={styles.label}>
+              {I18n.t('translation.domain', {locale: ln})}
+            </Text>
+            <Text style={styles.info}>
+              {item.category}
+            </Text>
+          </View>
+
+        </View>
+        <View style={styles.infoRow}>
+          <View style={[styles.valueWrapper, {width: '60%'}]}>
+            <Text style={styles.label}>
+              {I18n.t('translation.workPeriod', {locale: ln})}
+            </Text>
+            <Text style={styles.info}>
+              {item.date}
+            </Text>
+          </View>
+          <View style={[styles.valueWrapper, {width: '40%'}]}>
+            <Text style={styles.label}>
+              {I18n.t('translation.regionFrom', {locale: ln})}
+            </Text>
+            <Text style={styles.info}>
+              {item.area}
+            </Text>
+          </View>
+        </View>
       </View>
-      {
-        userInfo ?
-          <View style={styles.arrowWrapper}>
-            <Icon name='ios-arrow-back' size={40} color={Colors.black} />
-          </View> : null
-      }
+      <View style={styles.arrowWrapper}>
+        <Icon name='ios-arrow-back' size={40} color={Colors.black} />
+      </View>
     </View>
   </TouchableWithoutFeedback>
 )

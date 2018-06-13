@@ -12,10 +12,9 @@ import styles from './styles'
 import GuestMenu from './GuestMenu'
 import UserMenu from './UserMenu'
 import { selectLanguagesList } from '../../Redux/SettingsRedux'
-import { selectUserInfo, clearCurrentUser } from '../../Redux/UserRedux'
+import { selectUserInfo, clearCurrentUser, selectUserRating, getUserRating, unsubscribeNotifications } from '../../Redux/UserRedux'
 import { logout } from '../../Redux/AuthRedux';
 import { selectLanguage, updateCurrentLanguage } from '../../Redux/I18nRedux'
-
 
 import I18n from 'react-native-i18n'
 
@@ -24,14 +23,14 @@ class Sidebar extends Component {
   //   drawerLabel: 'sidebar',
   // };
   render () {
-    const {languages, navigation, userInfo, logout, clearCurrentUser, updateCurrentLanguage} = this.props
+    const { languages, navigation, userInfo, logout, clearCurrentUser, updateCurrentLanguage, ln, rating } = this.props
 
     const logoutAndClear = () => {
-      // todo: подумать о том, как выйти из Home stackNavigation
-      navigation.navigate('Home');
       logout();
       clearCurrentUser();
-    }
+      unsubscribeNotifications();
+      navigation.navigate('Login');
+    };
 
     return (
       <View style={styles.container}>
@@ -39,7 +38,8 @@ class Sidebar extends Component {
           userInfo
           ? <UserMenu
               languages={languages}
-              ln={this.props.ln}
+              ln={ln}
+              rating={rating}
               changeLanguage={updateCurrentLanguage}
               userInfo={userInfo}
               logoutAndClear={logoutAndClear}
@@ -47,7 +47,7 @@ class Sidebar extends Component {
             />
           : <GuestMenu
               languages={languages}
-              ln={this.props.ln}
+              ln={ln}
               changeLanguage={updateCurrentLanguage}
               navigate={navigation.navigate}
             />
@@ -61,19 +61,22 @@ Sidebar.propTypes = {
   languages: PropTypes.any,
   navigation: PropTypes.any,
   userInfo: PropTypes.object,
-}
+  rating: PropTypes.any
+};
 
 const mapStateToProps = createStructuredSelector({
   languages: selectLanguagesList(),
   ln: selectLanguage(),
   userInfo: selectUserInfo(),
-})
+  rating: selectUserRating()
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {
     clearCurrentUser: (data) => dispatch(clearCurrentUser()),
     logout: (data) => dispatch(logout()),
-    updateCurrentLanguage: (ln) => dispatch(updateCurrentLanguage(ln))
+    updateCurrentLanguage: (ln) => dispatch(updateCurrentLanguage(ln)),
+    getUserRating: () => dispatch(getUserRating())
   }
 }
 

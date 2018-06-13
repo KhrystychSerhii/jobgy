@@ -9,7 +9,7 @@ import { Colors } from '../../Themes'
 class CheckBox extends React.Component {
   render() {
     return (
-      <TouchableOpacity style={styles.checkBox} onPress={this.props.onPress}>
+      <TouchableOpacity style={[styles.checkBox, this.props.checked ? {backgroundColor: Colors.darkBlue} :  null]} onPress={this.props.onPress}>
         {
           this.props.checked &&
           <View style={{
@@ -17,7 +17,7 @@ class CheckBox extends React.Component {
             height: 8.3,
             borderBottomWidth: 3,
             borderLeftWidth: 3,
-            borderColor: Colors.black,
+            borderColor: Colors.white,
             transform: [{ rotate: '-45deg'}],
             top: 2.5,
             right: .25,

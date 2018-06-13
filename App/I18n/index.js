@@ -1,4 +1,10 @@
 import I18n from './I18n'
+import { I18nManager } from 'react-native';
+try {
+  I18nManager.allowRTL(false);
+} catch (e) {
+  console.log(e);
+}
 
 const missingTranslationRegex = /^\[missing ".*" translation\]$/
 

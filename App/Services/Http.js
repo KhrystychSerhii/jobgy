@@ -74,13 +74,15 @@ class Http {
   }
 
   put (endpoint, data, config) {
-    console.log('PUT endpoint', endpoint);
-    console.log('PUT DATA', data);
     return this.http.put(endpoint, data, config)
   }
 
   delete (endpoint, params) {
     return this.http.delete(endpoint, {params});
+  }
+
+  patch (endpoint, data) {
+    return this.http.patch(endpoint, data);
   }
 }
 

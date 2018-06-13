@@ -1,5 +1,7 @@
 import { StyleSheet, Dimensions, I18nManager } from 'react-native'
+import { scale } from 'react-native-size-matters'
 import { Colors } from '../../Themes'
+
 
 export default StyleSheet.create({
   title: {
@@ -7,7 +9,7 @@ export default StyleSheet.create({
   },
   wrapper: {
     backgroundColor: Colors.darkBlue,
-    height: 50,
+    height: scale(50),
     flex: 0,
     alignItems: 'center',
     position: 'relative'
@@ -15,20 +17,23 @@ export default StyleSheet.create({
   headerButton: {
     position: 'absolute',
     flex: 0,
-    height: 50,
-    minWidth: 40,
+    height: scale(50),
+    minWidth: scale(40),
     alignItems: 'center',
   },
   headerButtonInner: {
     marginTop: 'auto',
     marginBottom: 'auto',
+
   },
   // Hamburger menu button
   sidemenuBtn: {
     [I18nManager.isRTL ? 'right' : 'left']: 0,
   },
   sidemenuBtnImg: {
-    resizeMode: 'center',
+    resizeMode: 'contain',
+    height: 20,
+    minWidth: 20,
   },
   // Back button
   backBtn: {
@@ -40,9 +45,9 @@ export default StyleSheet.create({
     paddingBottom: 2,
     backgroundColor: Colors.red,
     borderRadius: 9,
-    minWidth: 18,
-    maxWidth: 36,
-    height: 18,
+    minWidth: scale(18),
+    maxWidth: scale(36),
+    height: scale(18),
     justifyContent: 'center',
     alignItems: 'center',
     top: 3,
@@ -61,22 +66,27 @@ export default StyleSheet.create({
     position: 'absolute',
     [I18nManager.isRTL ? 'right' : 'left']: 40,
     flex: 0,
-    height: 50,
+    height: scale(50),
     flexWrap: 'nowrap',
     flexDirection: 'row',
-    maxWidth: Dimensions.get('window').width * 0.4,
+    maxWidth: Dimensions.get('window').width * 0.7,
     alignItems: 'center',
     paddingHorizontal: 5
   },
   userImage: {
-    borderRadius: 9,
+    position: 'absolute',
+    [I18nManager.isRTL ? 'left' : 'right']: 0,
+    top: 2,
+    borderRadius: 35,
     resizeMode: 'center',
     width: 35,
     height: 35,
-    margin: 5
+    margin: 5,
+    overflow: 'hidden'
   },
   userName: {
     alignSelf: 'center',
-    color: Colors.white
+    color: Colors.white,
+    paddingRight: 45
   }
 })

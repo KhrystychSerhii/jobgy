@@ -11,10 +11,33 @@ export default StyleSheet.create({
     paddingTop: scale(15),
     paddingBottom: scale(15),
     marginBottom: 12,
+    width: '100%'
   },
   infoWrapper: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    paddingLeft: 20,
+    // borderColor: 'red',
+    // borderWidth: 1
+  },
+  infoRow: {
+    width: '100%',
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  valueWrapper: {
+    marginLeft: 10
+  },
+  label: {
+    textAlign: 'right',
+    color: '#969696',
+    ...Fonts.style.h4
+  },
+  info: {
+    textAlign: 'right',
+    color: '#303030',
+    ...Fonts.style.h4
   },
   itemLabel: {
     color: Colors.black,

@@ -26,7 +26,7 @@ const selectFilterDomain = (state) => {
   return state.filter;
 }
 
-export const selectFilters = () => createSelector(selectFilterDomain, subdomain => subdomain.params)
+export const selectFilters = () => createSelector(selectFilterDomain, subdomain => subdomain.params);
 /* ------------- Reducers ------------- */
 // successful avatar lookup
 const success = (state, data) => {

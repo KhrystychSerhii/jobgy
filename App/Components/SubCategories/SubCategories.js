@@ -8,13 +8,11 @@ import styles from './styles'
 
 class SubCategories extends React.Component {
   render () {
-    const {subCategories, titleImage, title, onSelectCategory, titleImageStyles, categoryImage} = this.props;
-    console.log('SubCategories this.props', this.props)
+    const {subCategories, titleImage, leftImage, title, onSelectCategory, titleImageStyles, categoryImage} = this.props;
     return (
       <ScreenContainer>
         <View style={styles.titleWithImagesWrapper}>
-          <PageTitle title={title} />
-          <Image source={titleImage} style={[styles.titleImage, titleImageStyles]} resizeMode='contain' />
+          <PageTitle title={title} leftImage={leftImage} rightImage={titleImage} />
         </View>
         <SubCategoriesList list={subCategories} onSelectCategory={onSelectCategory} />
       </ScreenContainer>

@@ -5,7 +5,7 @@ import { fetchAttributes } from '../Services/Api'
 
 /* ------------- Types and Action Creators ------------- */
 
-export const GET_ATTRIBUTES_SUCCESS = 'jobjy/user/GET_ATTRIBUTES'
+export const GET_ATTRIBUTES_SUCCESS = 'jobjy/user/GET_ATTRIBUTES';
 
 const getAttributesListSuccess = (data) => ({type: GET_ATTRIBUTES_SUCCESS, data});
 

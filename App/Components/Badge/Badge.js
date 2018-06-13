@@ -14,7 +14,8 @@ class Badge extends React.Component {
     const {children, onPress, top, left, right, backgroundColor, size} = this.props
     return (
       <TouchableOpacity
-        onPress={onPress}
+        activeOpacity={!!onPress ? .2 : 1}
+        onPress={onPress ? onPress : null}
         style={[
           styles.badge,
           {top},

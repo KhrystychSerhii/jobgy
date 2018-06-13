@@ -16,7 +16,8 @@ import FindJobForm from '../../Components/JobForm/FindJobForm'
 
 class FilterModal extends React.Component {
   render () {
-    const {interests, regions, regionsObj, filters, cities, onSubmit, onReset, ln} = this.props;
+    const {isUserPremium, attributes, interests, regions, regionsObj, filters, cities, onSubmit, onReset, ln} = this.props;
+
     return (
       <ModalWrapper
         onClose={this.props.onModalClose}
@@ -28,9 +29,8 @@ class FilterModal extends React.Component {
           <TouchableWithoutFeedback onPress={this.props.onModalClose}>
             <View style={{justifyContent: 'center'}}>
               <Row justifyContent='space-around' width={150}>
-                <Icon name='ios-arrow-back' size={40} color={Colors.white} />
                 <Image source={Images.filterIcon} style={{width: 25}} resizeMode={'contain'} />
-                <Text style={styles.modalHeaderText}>{I18n.t('translation.filterAd', {locale: ln})}</Text>
+                <Text style={[styles.modalHeaderText, {textDecorationLine: 'underline'}]}>{I18n.t('translation.filterAd', {locale: ln})}</Text>
               </Row>
             </View>
           </TouchableWithoutFeedback>
@@ -43,7 +43,7 @@ class FilterModal extends React.Component {
           </TouchableWithoutFeedback>
         </Row>
         <ScrollView style={{flex: 1}} contentContainerStyle={{flexGrow: 1, justifyContent: 'flex-start'}}>
-          <FindJobForm onSubmit={onSubmit} onReset={onReset} cities={cities} filters={filters} interests={interests} regions={regions} regionsObj={regionsObj} ln={ln} />
+          <FindJobForm isUserPremium={isUserPremium} attributes={attributes} onSubmit={onSubmit} onReset={onReset} cities={cities} filters={filters} interests={interests} regions={regions} regionsObj={regionsObj} ln={ln} />
         </ScrollView>
       </ModalWrapper>
     )
@@ -51,10 +51,12 @@ class FilterModal extends React.Component {
 }
 
 FilterModal.propTypes = {
+  isUserPremium: PropTypes.bool.isRequired,
+  attributes: PropTypes.object,
   modalVisible: PropTypes.bool,
   onModalClose: PropTypes.func,
   interests: PropTypes.array,
   ln: PropTypes.any
-}
+};
 
 export default FilterModal

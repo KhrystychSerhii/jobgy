@@ -8,18 +8,22 @@ import Images from '../../Themes/Images';
 import ScreenContainer from '../../Components/ScreenContainer/ScreenContainer';
 import PageTitle from '../../Components/PageTitle/PageTitle';
 import Badge from '../../Components/Badge';
-import { getAllNotifications, removeNotification } from '../../Redux/NotificationRedux';
+// Modals
+import NotificationItemModal from '../../Components/NotificationItemModal';
+
+import { selectAllNotifications, removeNotification, getAllNotifications } from '../../Redux/NotificationRedux';
 
 import { createStructuredSelector } from 'reselect'
 
 import styles from './style'
 
 import I18n from '../../I18n'
-import {selectLanguage} from "../../Redux/I18nRedux";
+import {selectLanguage} from '../../Redux/I18nRedux';
 
-const NotificationItem = ({notification, removeNotification, ln}) => {
+const NotificationItem = ({notification, removeNotification, ln, onPress}) => {
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => { console.log('notification', notification); onPress(notification) }}
       style={{flex: 0, flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 2, borderBottomColor: 'blue', paddingVertical: 10}}
     >
       <View
@@ -39,8 +43,8 @@ const NotificationItem = ({notification, removeNotification, ln}) => {
         }}
       >
         <Text>
-          {I18n.t(`translation.${notification.translation}`, Object.assign(notification.meta_info, {locale: ln}) )}
-          {I18n.t(`translation.${notification.translation}`, Object.assign(notification.meta_info, {locale: ln}) )}
+          {I18n.t(`translation.${notification.translation}`, notification.meta_info.merge({locale: ln}) )}
+          {I18n.t(`translation.${notification.translation}`, notification.meta_info.merge({locale: ln}) )}
         </Text>
       </View>
       <View
@@ -48,40 +52,55 @@ const NotificationItem = ({notification, removeNotification, ln}) => {
       >
         <Image resizeMode={'contain'} style={{width: 50, height: 30, marginLeft: 'auto'}} source={{uri: AppConfig.baseUrl + notification.icon_path}} />
       </View>
-    </View>
+    </TouchableOpacity>
   )
 };
 
 class MyNotificationsScreen extends React.Component {
   state = {
     spinner: true,
+    selectedNotification: null,
+    modalOpened: false,
     notifications: []
-  }
+  };
+
+  openNotificationModal = (notification) => {
+    this.setState({selectedNotification: notification}, () => {
+      this.setState({modalOpened: true});
+    });
+  };
+
+  closeNotificationModal = () => {
+    this.setState({modalOpened: false}, () => {
+      this.setState({selectedNotification: null});
+    });
+  };
+
+  onButtonPress = () => {
+    const { selectedNotification } = this.state;
+    const notificationTypeId = selectedNotification.type.id;
+    const notificationPostId = selectedNotification.post.id;
+
+    this.closeNotificationModal();
+    if (notificationTypeId === 1) this.props.navigation.navigate('Details', {postId: notificationPostId});
+    if (notificationTypeId === 2) this.props.navigation.navigate('Rating', {postId: notificationPostId})
+
+  };
 
   componentDidMount() {
-    this._getNotificationsList = this._getNotificationsList.bind(this);
-    this._getNotificationsList();
-  }
-
-  removeNotification(id) {
-    removeNotification(id).then(() => {
-      this.setState({notifications: this.state.notifications.filter((item) => item.id !== id)})
-    });
+    this.setState({spinner: true});
+    this.props.getAllNotifications().then(() => {
+      this.setState({spinner: false});
+    })
   }
 
   keyExtractor = (item, index) => index;
 
   ///
-  _getNotificationsList() {
-    this.setState({spinner: true});
-    getAllNotifications().then((notifications) => {
-      console.log('notifications', notifications);
-      this.setState({spinner: false});
-      this.setState({notifications});
-    })
-  }
 
   render() {
+    const {notifications, removeNotification, ln} = this.props;
+    console.log('notifications', notifications);
     return (
       <ScrollView style={{flex: 1, width: '100%', backgroundColor: '#fff', paddingBottom: 10, paddingHorizontal: 40}}>
         {
@@ -91,24 +110,39 @@ class MyNotificationsScreen extends React.Component {
               numColumns={1}
               style={{width: '100%'}}
               keyExtractor={this.keyExtractor}
-              data={this.state.notifications}
-              extraData={this.state}
+              data={notifications}
+              extraData={this.props}
               renderItem={({item}) =>
-                <NotificationItem notification={item} removeNotification={this.removeNotification.bind(this)} ln={this.props.ln} />
+                <NotificationItem notification={item} removeNotification={removeNotification} ln={ln} onPress={this.openNotificationModal} />
               }
             />
         }
+        {
+          this.state.modalOpened &&
+          <NotificationItemModal
+            modalVisible={this.state.modalOpened}
+            onDismiss={this.closeNotificationModal}
+            onButtonPress={this.onButtonPress}
+            notification={this.state.selectedNotification}
+            locale={ln}
+          />
+        }
+
       </ScrollView>
     )
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  ln: selectLanguage()
+  ln: selectLanguage(),
+  notifications: selectAllNotifications()
 })
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    removeNotification: (id) => dispatch(removeNotification(id)),
+    getAllNotifications: () => dispatch(getAllNotifications())
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyNotificationsScreen);

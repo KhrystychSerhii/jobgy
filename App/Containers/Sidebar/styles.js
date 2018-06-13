@@ -23,12 +23,17 @@ export default StyleSheet.create({
     paddingTop: 35,
     paddingBottom: 0
   },
+  topInfoText: {
+    ...Fonts.style.h23Bold,
+    color: Colors.white,
+    marginBottom: 5
+  },
   introductionTextWrapper: {
     marginTop: 15,
     marginBottom: 40,
   },
   introductionText: {
-    ...Fonts.style.h4,
+    ...Fonts.style.h5Bold,
     color: Colors.white,
     textAlign: 'center',
   },
@@ -71,4 +76,68 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   loginLink: {},
+  callCenterWrapper: {
+    paddingHorizontal: 15,
+    paddingTop: 5
+  },
+  callCenterText: {
+    fontWeight: '200',
+    color: '#fff',
+    textAlign: 'left'
+  },
+  loggedOutContent: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  dashedLine: {
+    width: '90%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  registerButtonWrapper: {
+
+  },
+  loggedOutFooter: {
+
+  },
+  languageSelectorWrapper: {
+
+  },
+  languageSelectorTitle: {
+    ...Fonts.style.h3Bold,
+    color: Colors.white,
+    textAlign: 'center',
+    marginBottom: 10
+  },
+  languagesWrapper: {
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 30,
+  },
+  languageSelectButton: {
+    marginHorizontal: 10,
+    padding: 5,
+    borderRadius: 5
+  },
+  selectedLanguageSelectButton: {
+    backgroundColor: Colors.white
+  },
+  languageSelectButtonText: {
+    ...Fonts.style.h4Bold,
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+
+  },
+  selectedLanguageButtonText: {
+    textShadowColor: '#2173d0',
+    color: '#2173d0'
+  },
+  unselectedLanguageButtonText: {
+    textShadowColor: Colors.white,
+    color: Colors.white
+  }
+
 })

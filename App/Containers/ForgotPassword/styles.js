@@ -21,5 +21,10 @@ export default StyleSheet.create({
     marginRight: 'auto',
     borderWidth: 2,
     borderColor: Colors.white,
+  },
+  buttonContainer: {
+    width: '60%',
+    marginLeft: 'auto',
+    marginRight: 'auto'
   }
 })

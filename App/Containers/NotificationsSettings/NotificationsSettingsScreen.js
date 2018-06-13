@@ -39,7 +39,8 @@ class NotificationsSettingsScreen extends React.Component {
           refreshing={true}
           numColumns={3}
           keyExtractor={this.keyExtractor}
-          data={this.props.categories ? this.props.categories.filter(item => { return typeof item.can_notify === 'number' }) : []}
+          columnWrapperStyle={{flex: 0, flexDirection: 'row-reverse', justifyContent: 'center'}}
+          data={this.props.categories ? this.props.categories.filter(item => { return item.is_available }) : []}
           extraData={this.state}
           renderItem={({item}) =>
             <View

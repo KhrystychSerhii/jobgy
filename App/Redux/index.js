@@ -14,7 +14,11 @@ export const reducers = combineReducers({
   attributes: require('./AttributesRedux').reducer,
   ad: require('./AdsRedux').reducer,
   questions: require('./QuestionsRedux').reducer,
-  categories: require('./CategoriesRedux').reducer
+  categories: require('./CategoriesRedux').reducer,
+  notifications: require('./NotificationRedux').reducer,
+  business: require('./BusinessRedux').reducer,
+  calls: require('./CallsRedux').reducer,
+  subscriptions: require('./SubscriptionRedux').reducer
 })
 
 export default () => {

@@ -11,10 +11,10 @@ class TextButton extends React.Component {
 
     return (
       <TouchableOpacity onPress={this.props.onPress} style={[styles.textButton]}>
+        <Text style={styles.text} numberOfLines={1} ellipsizeMode='tail'>{text}</Text>
         {
           icon ? this.props.icon : null
         }
-        <Text style={styles.text} numberOfLines={1} ellipsizeMode='tail'>{text}</Text>
       </TouchableOpacity>
     )
   }

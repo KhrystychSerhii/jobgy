@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Formik, FormikActions } from 'formik'
 import Yup from 'yup'
 import { View, ScrollView, I18nManager } from 'react-native'
-import isArray from 'lodash/isArray'
+import { isArray, sortBy } from 'lodash'
 
 import I18n from '../../I18n'
 import { Colors } from '../../Themes'
@@ -12,25 +12,35 @@ import FormInput from '../FormInput'
 import Row from '../Row'
 import FormButton from '../FormButton/FormButton'
 import FormDatePicker from '../FormInput/FormDatePicker'
+import DatePicker from '../../Components/DatePicker';
+import { MultiSelectDropdown, SingleSelectDropdown } from '../../Components/SelectDropdown'
+import { FormTextArea, FormTextInput } from '../FormTextInput';
 import { toggleItemInArray } from '../../Transforms/index'
-import lodash from 'lodash'
 
 const validationSchema = Yup.object().shape({
   interest: Yup.number().required(),
   work_period_from: Yup.string().trim(), //.required('Required!'),
   work_period_to: Yup.string().trim(), //.required('Required!'),
   regions_from: Yup.string().trim(), //.required('Required'),
-})
+});
 
 class FindJobForm extends React.Component {
+  static defaultProps = {
+    attributes: {
+      attributes: [],
+      visibilities: []
+    }
+  };
 
   handleSelectRegion = (name, value) => {
     this.setState({[name]: value})
   }
 
   getCitiesByRegionsId = (regions) => {
+    console.log('regions => ', regions);
     if (!regions) {
-      return []
+      console.log('return empty array');
+      return [];
     } else {
       let regionsObj = {};
 
@@ -39,7 +49,7 @@ class FindJobForm extends React.Component {
       }
       return Object.keys(this.props.cities).map(key => this.props.cities[key]).filter(item => !!regionsObj[item.parent_id]);// Object.keys(this.props.cities).map(key => this.props.cities[key]).filter(item => item.parent_id === regionId)
     }
-  }
+  };
 
   componentWillReceiveProps = (e) => {
     if (this.isFiltersEmpty(e.filters)) {
@@ -68,32 +78,85 @@ class FindJobForm extends React.Component {
     return null;
   }
 
-  isFiltersEmpty(filters) {
+  isFiltersEmpty = (filters) => {
     for (let key in filters) {
       if (!!(typeof filters[key] === 'string' && filters[key])) return true;
       if (!!(isArray(filters[key]) && filters[key].length === 0)) return true;
     }
     return false;
-  }
+  };
+
+  //
+  _isArrayCheck = (object, field) => {
+    return object && isArray(object[field]);
+  };
+
+  _isStringCheck = (object, field) => {
+    return object && (!!object[field] || object[field] === 0);
+  };
 
   render () {
-    const {onSubmit, interests, filters, regions, ln} = this.props
+    const {onSubmit, interests, attributes, filters, regions, ln, isUserPremium} = this.props;
     // const citiesFrom = this.getCitiesByRegionsId(this.state.regionFrom)
     // const citiesTo = this.getCitiesByRegionsId(this.state.regionTo)
-console.log('find job form filters', filters);
-    const initialValues = !!filters ? filters : {
-      interest: '',
+    let initialValues = {
+      // location_from
+      region_from: this._isArrayCheck(filters, 'region_from') ? filters.region_from : [],
+      location_from: this._isArrayCheck(filters, 'location_from') ? filters.location_from : [],
 
-      work_period_from: '',
-      work_period_to: '',
+      // location_to
+      region_to: this._isArrayCheck(filters, 'region_to') ? filters.region_to : [],
+      location_to: this._isArrayCheck(filters, 'location_to') ? filters.location_to : [],
 
-      regions_from: [],
-      regions_to: [],
+      // address_from
+      addr_from: this._isStringCheck(filters, 'location_to') ? filters.addr_from : '',
+      // address_to
+      addr_to: this._isStringCheck(filters, 'addr_to') ? filters.addr_to : '',
 
-      location_from: [],
-      location_to: [],
-    }
+      // work_period_from
+      work_period_from: this._isStringCheck(filters, 'work_period_from') ? filters.work_period_from : '',
+      // work_period_to
+      work_period_to: this._isStringCheck(filters, 'work_period_to') ? filters.work_period_to : '',
+
+      // interest
+      interest: this._isStringCheck(filters, 'interest') ? filters.interest : '',
+    };
+
+    const dynamicVisibleAttributes = sortBy(
+      attributes.attributes
+        .filter(item => (item.attribute_type_id === 3 || item.attribute_type_id === 1))
+        .map(item => {
+          switch (item.attribute_type_id) {
+            case 1:
+              initialValues[item.id] = [];
+              break;
+            case 3:
+              initialValues[item.id] = '';
+              break;
+            default:
+              break;
+          }
+          return item;
+        }),
+        'display_order'
+    );
+    const defaultHiddenFields = attributes.visibilities.map(item => {
+      return {
+        [item['name']]: item.visible
+      }
+    }).filter(item => {
+      let key = Object.keys(item)[0];
+      return item[key] === 0;
+    }).reduce((result, item, index, array) => {
+      let key = Object.keys(item)[0];
+      result[key] = true;
+      delete initialValues[key];
+      return result;
+    }, {});
+
+    // {...(!filters ? {validationSchema: validationSchema} : {})}
     return (
+
       <Formik
         ref={this.getAction.bind(this)}
         initialValues={initialValues}
@@ -101,11 +164,10 @@ console.log('find job form filters', filters);
         onSubmit={(values, {setSubmitting, setErrors}) => {
           onSubmit(values)
             .catch((e) => {
-              e.data.errors && setErrors(e.data.errors)
+              e.data.errors && setErrors(e.data.errors);
               setSubmitting(false)
             })
         }}
-        {...(!filters ? {validationSchema: validationSchema} : {})}
         render={
           ({
              values,
@@ -114,105 +176,151 @@ console.log('find job form filters', filters);
              handleSubmit,
              isSubmitting,
              setFieldValue,
+             setFieldTouched
            }) => {
-            // console.log('values ==> ', values);
             return (
               <View style={{flex: 1}}>
                 <ScrollView>
-                  <FormSelectDropdown
-                    multiple={true}
-                    onChange={setFieldValue}
-                    selectedItems={values.regions_from}
-                    textField={'title'}
-                    valueField={'id'}
-                    selectedText={this.multipleSelectText(regions, values.regions_from, ln)}
-                    label={I18n.t('translation.selectRegionFrom', {locale: ln})}
-                    values={regions}
-                    name={'regions_from'}
-                    ln={ln}
-                  />
+                  {
+                    dynamicVisibleAttributes.map((field, index) => {
+                      return field.attribute_type_id === 1 ?
+                        <MultiSelectDropdown
+                          key={index}
+                          items={[].concat(field.entries)}
+                          onSelect={(selectedItems) => { setFieldValue('' + field.id, selectedItems); }}
+                          selectedItems={values['' + field.id]}
+                          displayedProperty={'title'}
+                          valueProperty={'id'}
+                          label={field.title}
+                          locale={ln}
+                        /> : null
+                    })
+                  }
+
+                  {
+                    !defaultHiddenFields.location_from ?
+                      <MultiSelectDropdown
+                        items={[].concat(regions)}
+                        onSelect={(selectedItems) => { setFieldValue('region_from', selectedItems) }}
+                        displayedProperty={'title'}
+                        selectedItems={values.region_from}
+                        valueProperty={'id'}
+                        label={I18n.t('translation.selectRegionFrom', {locale: ln})}
+                        locale={ln}
+                      /> : null
+                  }
+
+                  {
+                    !defaultHiddenFields.location_from ?
+                      <MultiSelectDropdown
+                        items={[].concat(this.getCitiesByRegionsId(values.region_from))}
+                        onSelect={(selectedItems) => { setFieldValue('location_from', selectedItems) }}
+                        displayedProperty={'title'}
+                        selectedItems={values.location_from}
+                        valueProperty={'id'}
+                        label={I18n.t('translation.selectLocationFrom', {locale: ln})}
+                        locale={ln}
+                        disabled={values.region_from.length === 0}
+                      /> : null
+                  }
+
+                  {/*{*/}
+                    {/*!defaultHiddenFields.address_from ?*/}
+                      {/*<MultiSelectDropdown*/}
+                        {/*items={[].concat(regions)}*/}
+                        {/*onSelect={(selectedItems) => { setFieldValue('addr_from', selectedItems); }}*/}
+                        {/*displayedProperty={'title'}*/}
+                        {/*selectedItems={values.addr_from}*/}
+                        {/*valueProperty={'id'}*/}
+                        {/*label={I18n.t('translation.selectRegionFrom', {locale: ln})}*/}
+                        {/*locale={ln}*/}
+                      {/*/> : null*/}
+                  {/*}*/}
+
+                  {
+                    !defaultHiddenFields.location_to ?
+                      <MultiSelectDropdown
+                        items={[].concat(regions)}
+                        onSelect={(selectedItems) => { setFieldValue('region_to', selectedItems) }}
+                        displayedProperty={'title'}
+                        selectedItems={values.region_to}
+                        valueProperty={'id'}
+                        label={I18n.t('translation.selectRegionTo', {locale: ln})}
+                        locale={ln}
+                      /> : null
+                  }
+
+                  {
+                    !defaultHiddenFields.location_to ?
+                      <MultiSelectDropdown
+                        items={[].concat(this.getCitiesByRegionsId(values.region_to))}
+                        onSelect={(selectedItems) => { setFieldValue('location_to', selectedItems) }}
+                        displayedProperty={'title'}
+                        selectedItems={values.location_to}
+                        valueProperty={'id'}
+                        label={I18n.t('translation.selectLocationTo', {locale: ln})}
+                        locale={ln}
+                        disabled={values.region_to.length === 0}
+                      /> : null
+                  }
 
 
-                  <FormSelectDropdown
-                    multiple={true}
-                    invalid={!!errors.location_from && touched.location_from}
-                    onChange={setFieldValue}
-                    selectedItems={values.location_from}
-                    textField={'title'}
-                    valueField={'id'}
-                    selectedText={this.multipleSelectText(this.props.cities, values.location_from, ln)}
-                    label={I18n.t('translation.selectLocationFrom', {locale: ln})}
-                    values={this.getCitiesByRegionsId(values.regions_from)}
-                    name={'location_from'}
-                    ln={ln}
-                  />
 
+                  <View style={{flex: 0, flexDirection: 'row', justifyContent: 'space-between'}}>
+                    {
+                      !defaultHiddenFields.work_period_to ?
+                        <View style={(defaultHiddenFields.work_period_to || defaultHiddenFields.work_period_from) ? {width: '100%'} : {width: '48%'}}>
+                          <DatePicker
+                            onSelect={(value) => { setFieldValue('work_period_to', value) }}
+                            label={I18n.t('translation.endOfWork', {locale: ln})}
+                            value={values.work_period_to}
+                          />
+                        </View> : null
+                    }
+                    {
+                      !defaultHiddenFields.work_period_from ?
+                        <View style={(defaultHiddenFields.work_period_to || defaultHiddenFields.work_period_from) ? {width: '100%'} : {width: '48%'}}>
+                          <DatePicker
+                            onSelect={(value) => { setFieldValue('work_period_from', value) }}
+                            label={I18n.t('translation.beginningOfWork', {locale: ln})}
+                            value={values.work_period_from}
+                          />
+                        </View> : null
+                    }
+                  </View>
 
-                  <FormSelectDropdown
-                    multiple={true}
-                    onChange={setFieldValue}
-                    selectedItems={values.regions_to}
-                    textField={'title'}
-                    valueField={'id'}
-                    selectedText={this.multipleSelectText(this.props.regions, values.regions_to, ln)}
-                    label={I18n.t('translation.selectRegionTo', {locale: ln})}
-                    values={this.props.regions}
-                    name={'regions_to'}
-                    ln={ln}
-                  />
+                  {
+                    !defaultHiddenFields.post_phone && isUserPremium ?
+                      <FormTextInput
+                        invalid={errors.phone_number && touched.phone_number}
+                        onChange={(value) => { setFieldValue('phone_number', value.replace(/\D/g, '')); }}
+                        onBlur={() => setFieldTouched('phone_number')}
+                        placeholder={I18n.t('translation.businessNumber', {locale: ln})}
+                        value={values.phone_number}
+                        required={true}
+                        keyboardType={'phone-pad'}
+                      /> : null
+                  }
 
-
-                  <FormSelectDropdown
-                    multiple={true}
-                    onChange={setFieldValue}
-                    selectedItems={values.location_to}
-                    textField={'title'}
-                    valueField={'id'}
-                    selectedText={this.multipleSelectText(this.props.cities, values.location_to, ln)}
-                    label={I18n.t('translation.selectLocationTo', {locale: ln})}
-                    values={this.getCitiesByRegionsId(values.regions_to)}
-                    name={'location_to'}
-                    ln={ln}
-                  />
-
-                  <Row flexDirection={'row'} justifyContent={'space-between'}>
-                    <View style={{width: '48%', marginBottom: 10}}>
-                      <FormDatePicker
-                        invalid={errors.work_period_from && touched.work_period_from}
-                        onChange={setFieldValue}
-                        readOnly value={values.work_period_from}
-                        name={'work_period_from'}
-                        label={I18n.t('translation.beginningOfWork', {locale: ln})}
-                      />
-                    </View>
-                    <View style={{width: '48%', marginBottom: 10}}>
-                      <FormDatePicker
-                        invalid={errors.work_period_to && touched.work_period_to}
-                        onChange={setFieldValue}
-                        value={values.work_period_to}
-                        readOnly name={'work_period_to'}
-                        label={I18n.t('translation.endOfWork', {locale: ln})}
-                      />
-                    </View>
-                  </Row>
-
-                  <FormSelectDropdown
-                    invalid={!!errors.interest && touched.interest}
-                    onChange={setFieldValue}
-                    selectedItems={values.interest}
-                    textField={'title'}
-                    valueField={'id'}
-                    selectedText={this.props.interests.filter(item => values.interest === item.id)[0] && this.props.interests.filter(item => values.interest === item.id)[0].title}
-                    label={I18n.t('translation.selectInterest', {locale: ln})}
-                    values={interests}
-                    name={'interest'}
-                    ln={ln}
-                  />
-
+                  {
+                    !defaultHiddenFields.interest ?
+                      <SingleSelectDropdown
+                        items={[].concat(interests)}
+                        onSelect={(selectedItem) => {
+                          setFieldValue('interest', selectedItem)
+                        }}
+                        selectedItem={values.interest}
+                        displayedProperty={'title'}
+                        valueProperty={'id'}
+                        label={I18n.t('translation.selectInterest', {locale: ln})}
+                        locale={ln}
+                      /> : null
+                  }
 
                 </ScrollView>
                 <FormButton
                   style={filters && {backgroundColor: Colors.lightBlue}}
+                  backgroundColor={'#428cdd'}
                   // disabled={!filters && (Object.keys(errors).length > 0 || !this.state.regionFrom)}
                   onPress={handleSubmit}
                 >{I18n.t('translation.applyFilters', {locale: ln})}</FormButton>
@@ -226,9 +334,11 @@ console.log('find job form filters', filters);
 }
 
 FindJobForm.propTypes = {
+  isUserPremium: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func,
   interests: PropTypes.array,
-  ln: PropTypes.any
-}
+  attributes: PropTypes.object,
+  ln: PropTypes.any,
+};
 
 export default FindJobForm

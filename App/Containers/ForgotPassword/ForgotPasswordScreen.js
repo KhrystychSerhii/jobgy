@@ -24,25 +24,26 @@ class ForgotPasswordScreen extends React.Component {
   handleSubmit = (data) => {
     this.props.forgotPassword(data)
       .then((response) => {
-        // console.log('response', response);
         this.setState({passwordSent: true});
       });
   };
 
   onBackPress = () => {
-    this.props.screenProps.navigation.goBack();
+    console.log('this.props', this.props);
+    this.props.screenProps.rootNavigation.navigate('Login');
   };
 
   render() {
+    const { ln } = this.props;
     return (
       this.state.passwordSent ?
       <ScreenContainer>
-        <PageTitle title={I18n.t('translation.passwordSent', { locale: this.props.ln })} />
-        <PasswordSent onBackPress={this.onBackPress} ln={this.props.ln} />
+        <PageTitle title={I18n.t('translation.passwordSent', { locale: ln })} />
+        <PasswordSent onBackPress={this.onBackPress} ln={ln} />
       </ScreenContainer> :
       <ScreenContainer>
-        <PageTitle title={I18n.t('translation.resetPassword', { locale: this.props.ln })} />
-        <ForgotPasswordForm onSubmit={this.handleSubmit} onBackPress={this.onBackPress} />
+        <PageTitle title={I18n.t('translation.resetPassword', { locale: ln })} />
+        <ForgotPasswordForm onSubmit={this.handleSubmit} onBackPress={this.onBackPress} ln={ln} />
       </ScreenContainer>
     )
   }
@@ -50,7 +51,7 @@ class ForgotPasswordScreen extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   ln: selectLanguage()
-})
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {

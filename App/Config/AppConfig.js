@@ -1,14 +1,12 @@
 // Simple React Native specific changes
 
 import '../I18n/I18n'
-// dev
-const baseUrl = 'https://jobgy.dias.team'
-// prod
-// const baseUrl = 'https://app.jobgy.co.il'
-const apiUrl = baseUrl + '/api/v1'
 
-const notificationsToken = '/api/v1/token';
-
+const baseUrl = 'https://jobgy.dias.team'; // dev
+// const baseUrl = 'https://app.jobgy.co.il'; // prod
+const apiUrl = baseUrl + '/api/v1';
+const video = 'https://www.youtube.com/embed/_NXPRoC3mTg';
+const termsLink = 'http://jobgy.co.il/terms.pdf';
 
 // todo: узнать что это
 export default {
@@ -16,4 +14,6 @@ export default {
   allowTextFontScaling: true,
   baseUrl,
   apiUrl,
+  video,
+  termsLink,
 }

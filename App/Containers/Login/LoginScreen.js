@@ -13,24 +13,21 @@ import LoginForm from './LoginForm'
 import ScreenContainer from '../../Components/ScreenContainer/ScreenContainer'
 import { login } from '../../Redux/AuthRedux'
 import httpClient from '../../Services/Http'
-import { getCurrentUser } from '../../Redux/UserRedux'
-import {selectLanguage} from "../../Redux/I18nRedux";
+import { getCurrentUser, updateNotificationToken } from '../../Redux/UserRedux'
+import {selectLanguage} from '../../Redux/I18nRedux';
 
 class LoginScreen extends Component {
-  handleLogin = (credentials) => {
-    this.props.login(credentials)
-      .then((res) => {
-        return httpClient.setToken(res.data.token)
-      })
-      .then(() => {
-        return this.props.getCurrentUser()
-      })
-      .then(res => {
-        this.props.screenProps.rootNavigation.navigate('Home')
-      })
-      .catch(error => {
-        console.log('error ==> ', error);
-      })
+  handleLogin = async (credentials) => {
+    const loginResponse = await this.props.login(credentials);
+    const success = !!loginResponse.data.token;
+    if (success) {
+      const setTokenResponse = await httpClient.setToken(loginResponse.data.token);
+      const currentUser = await this.props.getCurrentUser();
+      const updateNotificationTokenResponse = await this.props.updateNotificationToken();
+      this.props.screenProps.rootNavigation.navigate('Home');
+    } else {
+      throw loginResponse.data;
+    }
   };
 
   createAccountPress = () => {
@@ -39,7 +36,7 @@ class LoginScreen extends Component {
 
   forgotPasswordPress = () => {
     console.log('this.props ==> ', this.props);
-    this.props.screenProps.navigation.navigate('ForgotPassword');
+    this.props.screenProps.rootNavigation.navigate('ForgotPassword');
   };
 
   render () {
@@ -61,6 +58,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     login: (data) => dispatch(login(data)),
     getCurrentUser: (data) => dispatch(getCurrentUser(data)),
+    updateNotificationToken: () => dispatch(updateNotificationToken()),
   }
 }
 

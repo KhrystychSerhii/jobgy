@@ -1,8 +1,10 @@
-import { StyleSheet, I18nManager } from 'react-native'
+import { StyleSheet, I18nManager, Dimensions } from 'react-native'
 import { ApplicationStyles, Colors } from '../../Themes/index'
 import Fonts from '../../Themes/Fonts'
 import { scale } from 'react-native-size-matters'
 
+const {width, height} = Dimensions.get('window')
+console.log('width', width)
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   container: {
@@ -68,18 +70,39 @@ export default StyleSheet.create({
     // paddingBottom:10
   },
   bottomBtnWrapper: {
-    // position: 'absolute',
-    // bottom: 0,
+    width: width,
+    position: 'absolute',
+    bottom: -((width / 4) * 3) + 40 + 5,
     // right: 0,
     // left: 0,
-    height: 40,
+    height: ((width / 4) * 3),
     // flex: 1,
     alignItems: 'center',
   },
   bottomBtn: {
+    marginLeft: 'auto',
+    marginRight: 'auto',
     backgroundColor: '#fff',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     padding: 10,
+    height: 40
   },
+  bottomVideo: {
+    aspectRatio: 1.7,
+    height: (width / 4) * 3
+  },
+  bottomVideoBorder: {
+    width: '100%',
+    height: 5,
+    backgroundColor: '#fff'
+  },
+  bottomVideoLinkBlocker: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    width: width / 3,
+    aspectRatio: 1.5,
+    backgroundColor: Colors.transparent
+  }
 })
